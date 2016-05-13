@@ -54,6 +54,16 @@
             aCircleView.setFillStyle("#" + CAAT.Color.prototype.hsvToRgb((entityDesc.entityid * 15) % 360, 40, 99).toHex()); // Random color
             aCircleView.setLocation(entityDesc.x, entityDesc.y); // Place in the center of the screen, use the director's width/height
 
+            var sprite = new CAAT.SpriteActor();
+            var image = new CAAT.CompoundImage()
+                .initialize(this.view.caatDirector.getImage('fish'), 1, 3);
+            sprite.setSpriteImage(image);
+            sprite.setAnimationImageIndex([0, 1, 2, 1]);
+            sprite.setChangeFPS(300);
+            sprite.create();
+            console.log(sprite);
+
+
             var newEntity = null;
 
             var isOwnedByMe = entityDesc.clientid == this.netChannel.clientid;
@@ -71,7 +81,8 @@
             }
 
             newEntity.position.set(entityDesc.x, entityDesc.y);
-            newEntity.setView(aCircleView);
+            newEntity.setView(sprite);
+
 
             this.fieldController.addEntity(newEntity);
         },
@@ -137,8 +148,8 @@
 
             return message;
         })()
-    }
+    };
 
     // extend RealtimeMultiplayerGame.AbstractClientGame
     RealtimeMultiplayerGame.extend(DemoApp.DemoClientGame, RealtimeMultiplayerGame.AbstractClientGame, null);
-})()
+})();

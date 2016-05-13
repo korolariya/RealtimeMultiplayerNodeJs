@@ -42,6 +42,16 @@
             this.caatDirector = new CAAT.Director().initialize(DemoApp.Constants.GAME_WIDTH, DemoApp.Constants.GAME_HEIGHT); // Create the director instance
             this.caatDirector.addScene(this.caatScene); // Immediately add the scene once it's created
 
+            var that = this;
+            new CAAT.ImagePreloader().loadImages(
+                [{
+                    id: 'fish',
+                    url: 'http://labs.hyperandroid.com/static/CAAT-Samples/demos/demo-resources/img/anim1.png'
+                }],
+                function (counter, images) {
+                    console.log(images);
+                    that.caatDirector.setImagesCache(images);
+                });
             // Start the render loop, with at 60FPS
 //			this.caatDirector.loop(60);
         },
