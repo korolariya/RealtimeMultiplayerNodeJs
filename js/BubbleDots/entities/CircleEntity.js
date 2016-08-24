@@ -101,7 +101,7 @@
          */
         dealloc: function () {
             console.log('destroy!');
-            this.collisionCircle.dealloc();
+            // this.collisionCircle.dealloc();
             this.collisionCircle = null;
 
             BubbleDots.CircleEntity.superclass.dealloc.call(this);

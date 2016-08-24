@@ -11,16 +11,17 @@
     BubbleDots.BulletEntity.prototype = {
 
         updatePosition: function (speedFactor, gameClock, gameTick) {
-            var moveSpeed = 1;
+            var moveSpeed = 0.5;
             this.acceleration.y -= moveSpeed;
             this.handleAcceleration(speedFactor, gameClock, gameTick);
             // console.log(gameClock);
         },
         test: {},
-        destroy: function () {
-            console.log('test');
-            // this.test.collisionManager.removeCircle(this);
-            this.test.fieldController.removeEntity(this);
+        destroy: function (aClientid) {
+            var self = this;
+            self.test.collisionManager.removeCircle(self.getCollisionCircle());
+            self.test.fieldController.removeEntity(self.entityid);
+
         },
         setTest: function (aTest) {
             this.test = aTest;

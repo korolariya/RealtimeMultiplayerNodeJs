@@ -70,10 +70,7 @@
             if (this.input.isSpace()) {
                 var self = this;
                 var radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
-                var bullet = self.test.createBulletEntity(BubbleDots.BulletEntity, radius, self.test.getNextEntityID(), RealtimeMultiplayerGame.Constants.SERVER_SETTING.CLIENT_ID);
-                bullet.setTest(self.test);
-                // self.test.collisionManager.removeCircle(bullet);
-                // self.test.fieldController.removeEntity(bullet);
+                self.test.createBulletEntity(BubbleDots.BulletEntity, radius, self.test.getNextEntityID(), self.clientid, self.position);
             }
 
             // We're pressing up - apply thrust...

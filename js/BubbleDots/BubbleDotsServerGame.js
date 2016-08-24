@@ -79,7 +79,7 @@
                     entity.addTraitAndExecute(new BubbleDots.traits.FoodTrait());
                 }
 
-//				entity.addTraitAndExecute( new BubbleDots.traits.PerlinNoiseTrait() );
+                //				entity.addTraitAndExecute( new BubbleDots.traits.PerlinNoiseTrait() );
             }
         },
 
@@ -105,11 +105,11 @@
 
             return circleEntity;
         },
-        createBulletEntity: function (aBubbleDotEntityConstructor, aRadius, anEntityid, aClientid) {
+        createBulletEntity: function (aBubbleDotEntityConstructor, aRadius, anEntityid, aClientid, position) {
             // Create the GameEntity
             var circleEntity = new aBubbleDotEntityConstructor(anEntityid, aClientid);
             var center = new RealtimeMultiplayerGame.model.Point(BubbleDots.Constants.GAME_WIDTH / 2, BubbleDots.Constants.GAME_HEIGHT / 2);
-            circleEntity.position.set(center.x, center.y);
+            circleEntity.position.set(position.x, position.y);
 
             // Create a randomly sized circle, that will represent this entity in the collision manager
             var collisionCircle = new RealtimeMultiplayerGame.modules.circlecollision.PackedCircle();
@@ -120,8 +120,7 @@
             this.collisionManager.addCircle(circleEntity.getCollisionCircle());
             this.fieldController.addEntity(circleEntity);
 
-
-
+            circleEntity.setTest(this);
             return circleEntity;
         },
 
@@ -172,7 +171,6 @@
         shouldUpdatePlayer: function (aClientid, data) {
             var entity = this.fieldController.getEntityWithid(data.payload.entityid);
             entity.input.deconstructInputBitmask(data.payload.input);
-            entity.setTest(this);
         },
 
         /**
