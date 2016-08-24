@@ -74,11 +74,11 @@
             });
 
             this.socketio.on('connection', function (socket) {
-                console.log(socket);
-                that.onSocketConnection(socket)
+               // console.log(socket);
+                that.onSocketConnection(socket);
 
                 socket.on('message', function (data) {
-                    console.log(data)
+                  //  console.log(data)
                     that.onSocketMessage(data, socket)
                 });
                 socket.on('disconnect', function () {

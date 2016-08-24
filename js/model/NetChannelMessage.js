@@ -75,4 +75,4 @@
             return {id: this.clientid, seq: this.sequenceNumber, cmds: this.unencodedMessage, t: this.messageTime}
         }
     }
-})()
+})();

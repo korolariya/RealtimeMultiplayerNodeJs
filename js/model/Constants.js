@@ -14,8 +14,8 @@
 (function () {
     RealtimeMultiplayerGame.Constants = {
         DEBUG_SETTING: {
-            SERVER_NETCHANNEL_DEBUG: true,
-            CLIENT_NETCHANNEL_DEBUG: true
+            SERVER_NETCHANNEL_DEBUG: false,
+            CLIENT_NETCHANNEL_DEBUG: false
         },
 
         SERVER_SETTING: {

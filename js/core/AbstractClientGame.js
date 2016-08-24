@@ -47,7 +47,7 @@
          * @inheritDoc
          */
         setupNetChannel: function () {
-            console.log("RealtimeMultiplayerGame.AbstractClientGame.superclass", RealtimeMultiplayerGame.AbstractClientGame.superclass)
+          //  console.log("RealtimeMultiplayerGame.AbstractClientGame.superclass", RealtimeMultiplayerGame.AbstractClientGame.superclass)
             RealtimeMultiplayerGame.AbstractClientGame.superclass.setupNetChannel.call(this);
             this.netChannel = new RealtimeMultiplayerGame.ClientNetChannel(this);
         },
@@ -130,7 +130,7 @@
 
             // Could not find two points to render between
             if (nextWED == null || previousWED == null) {
-                console.log("GIVE UP")
+              //  console.log("GIVE UP");
                 return false;
             }
 

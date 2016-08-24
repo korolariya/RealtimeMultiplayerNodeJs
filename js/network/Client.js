@@ -78,7 +78,7 @@
          * @param gameClock           The current (zero-based) game clock
          */
         compressDeltaAndQueueMessage: function (worldDescription, gameClock) {
-            debugger;
+            //debugger;
             var allEntities = worldDescription.entities,
                 len = allEntities.length;
 

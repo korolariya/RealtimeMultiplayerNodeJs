@@ -118,8 +118,6 @@
 
                 // Log if possible
                 console.log(message);
-                document.getElementsByTagName('aside')[0].appendChild(el);
-                document.getElementsByTagName('aside')[0].scrollTop = 1000000;
             };
 
             var esc = function (msg) {

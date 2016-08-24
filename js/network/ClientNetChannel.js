@@ -58,7 +58,7 @@
 
 
         setupSocketIO: function () {
-            debugger;
+           // debugger;
             this.socketio = new io.connect(RealtimeMultiplayerGame.Constants.SERVER_SETTING.GET_URI(), {transports: ['websocket', 'xhr-polling', 'jsonp-polling'], reconnect: false, rememberTransport: false});
 
             var that = this;
@@ -102,7 +102,7 @@
 
         ///// SocketIO Callbacks
         onSocketConnect: function () {
-            console.log("(ClientNetChannel):onSocketConnect", arguments, this.socketio);
+           // console.log("(ClientNetChannel):onSocketConnect", arguments, this.socketio);
         },
 
         /**
@@ -111,7 +111,7 @@
          */
         onSocketDidAcceptConnection: function (aNetChannelMessage) {
 
-            console.log("(ClientNetChannel)::onSocketDidAcceptConnection", aNetChannelMessage);
+          //  console.log("(ClientNetChannel)::onSocketDidAcceptConnection", aNetChannelMessage);
 
             // Should not have received this msg
             if (aNetChannelMessage.cmd != RealtimeMultiplayerGame.Constants.CMDS.SERVER_CONNECT) {

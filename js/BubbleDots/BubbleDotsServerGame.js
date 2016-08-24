@@ -48,9 +48,9 @@
         setupCollisionManager: function () {
             // Collision simulation
             this.collisionManager = new RealtimeMultiplayerGame.modules.circlecollision.CircleManager();
-            this.collisionManager.setBounds(0, 0, BubbleDots.Constants.GAME_WIDTH, BubbleDots.Constants.GAME_HEIGHT);
-            this.collisionManager.setNumberOfCollisionPasses(2);
-            this.collisionManager.setNumberOfTargetingPasses(0);
+            // this.collisionManager.setBounds(0, 0, BubbleDots.Constants.GAME_WIDTH, BubbleDots.Constants.GAME_HEIGHT);
+            // this.collisionManager.setNumberOfCollisionPasses(2);
+            // this.collisionManager.setNumberOfTargetingPasses(0);
             this.collisionManager.setCallback(this.onCollisionManagerCollision, this);
         },
 
@@ -134,12 +134,12 @@
             playerEntity.setInput(new RealtimeMultiplayerGame.Input.Keyboard());
             playerEntity.setColor("4");
 
-            playerEntity.addTraitAndExecute(new BubbleDots.traits.GravityTrait());
+            // playerEntity.addTraitAndExecute(new BubbleDots.traits.GravityTrait());
 
             // Set the boundary trait and the rule it will use
-            var boundaryTrait = new BubbleDots.traits.BoundaryTrait(this.collisionManager);
-            boundaryTrait.setBoundaryRule(RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_CONSTRAIN_Y);
-            playerEntity.addTraitAndExecute(boundaryTrait);
+            // var boundaryTrait = new BubbleDots.traits.BoundaryTrait(this.collisionManager);
+            // boundaryTrait.setBoundaryRule(RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_CONSTRAIN_Y);
+            // playerEntity.addTraitAndExecute(boundaryTrait);
 
             this.fieldController.addPlayer(playerEntity);
         },
