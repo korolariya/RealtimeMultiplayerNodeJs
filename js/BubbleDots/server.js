@@ -35,6 +35,7 @@ require("./BubbleDotsApp.js");
 require("./BubbleDotsConstants.js");
 require("./entities/CircleEntity.js");
 require("./entities/PlayerEntity.js");
+require("./entities/BulletEntity.js");
 require("./traits/FoodTrait.js");
 require("./traits/PoisonTrait.js");
 require("./traits/PerlinNoiseTrait.js");

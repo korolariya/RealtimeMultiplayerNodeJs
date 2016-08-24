@@ -17,7 +17,7 @@
     BubbleDots.PlayerEntity = function (anEntityid, aClientid) {
         BubbleDots.PlayerEntity.superclass.constructor.call(this, anEntityid, aClientid);
         this.entityType = BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY;
-        this.initThrust();
+        // this.initThrust();
     };
 
     BubbleDots.PlayerEntity.prototype = {
@@ -58,28 +58,46 @@
             this.handleInput(speedFactor);
             BubbleDots.PlayerEntity.superclass.updatePosition.call(this, speedFactor, gameClock, gameTick);
         },
-
+        bullets: [],
         handleInput: function (speedFactor) {
             var moveSpeed = 0.2;
 
             if (this.input.isLeft()) this.acceleration.x -= moveSpeed;
             if (this.input.isRight()) this.acceleration.x += moveSpeed;
             if (this.input.isDown()) this.acceleration.y += moveSpeed;
+            if (this.input.isUp()) this.acceleration.y -= moveSpeed;
+
+            if (this.input.isSpace()) {
+                var self = this;
+                var radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
+                var bullet = self.test.createBulletEntity(BubbleDots.BulletEntity, radius, self.test.getNextEntityID(), RealtimeMultiplayerGame.Constants.SERVER_SETTING.CLIENT_ID);
+                bullet.setTest(self.test);
+                // self.test.collisionManager.removeCircle(bullet);
+                // self.test.fieldController.removeEntity(bullet);
+            }
 
             // We're pressing up - apply thrust...
             // Call startThrust if we were not thrusting before
-            if (this.input.isUp()) {
-                if (!this._isThrusting) {
-                    this.startThrust();
-                }
+            // if (this.input.isUp()) {
+            //     if (!this._isThrusting) {
+            //         this.startThrust();
+            //     }
+            //
+            //     this.applyThrust();
+            // } else if (this._isThrusting) {
+            //     this.stopThrust();
+            // } else { // Default behavior - increase _thrustLevel
+            //     this._thrustLevel += BubbleDots.PlayerEntity.prototype.THRUST_DECREMENT * 2;
+            //     this._thrustLevel = Math.min(this._thrustLevel, 100);
+            // }
+        },
 
-                this.applyThrust();
-            } else if (this._isThrusting) {
-                this.stopThrust();
-            } else { // Default behavior - increase _thrustLevel
-                this._thrustLevel += BubbleDots.PlayerEntity.prototype.THRUST_DECREMENT * 2;
-                this._thrustLevel = Math.min(this._thrustLevel, 100);
-            }
+        test: function () {
+
+        },
+
+        setTest: function (aTest) {
+            this.test = aTest;
         },
 
         ///// ACCESSORS

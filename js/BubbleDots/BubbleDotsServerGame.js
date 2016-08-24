@@ -105,6 +105,26 @@
 
             return circleEntity;
         },
+        createBulletEntity: function (aBubbleDotEntityConstructor, aRadius, anEntityid, aClientid) {
+            // Create the GameEntity
+            var circleEntity = new aBubbleDotEntityConstructor(anEntityid, aClientid);
+            var center = new RealtimeMultiplayerGame.model.Point(BubbleDots.Constants.GAME_WIDTH / 2, BubbleDots.Constants.GAME_HEIGHT / 2);
+            circleEntity.position.set(center.x, center.y);
+
+            // Create a randomly sized circle, that will represent this entity in the collision manager
+            var collisionCircle = new RealtimeMultiplayerGame.modules.circlecollision.PackedCircle();
+            circleEntity.setCollisionCircle(collisionCircle);
+            circleEntity.setRadius(aRadius);
+
+            // Place the circle and collision circle into corresponding containers
+            this.collisionManager.addCircle(circleEntity.getCollisionCircle());
+            this.fieldController.addEntity(circleEntity);
+
+
+
+            return circleEntity;
+        },
+
 
         /**
          * @inheritDoc
@@ -113,11 +133,12 @@
             this.collisionManager.handleCollisions();
             BubbleDots.lib.TWEEN.update();
 
-//			var boundaryRule = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_CONSTRAIN_Y;
-//			var that = this;
-//			this.fieldController.getPlayers().forEach(function(key, value) {
-//				this.collisionManager.handleBoundaryForCircle( value.getCollisionCircle(), boundaryRule );
-//			}, this);
+
+            // var boundaryRule = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_CONSTRAIN_Y;
+            // var that = this;
+            // this.fieldController.getPlayers().forEach(function(key, value) {
+            // 	value.
+            // },this);
 
             // Note we call superclass's implementation after we're done
             BubbleDots.DemoServerGame.superclass.tick.call(this);
@@ -133,6 +154,7 @@
             playerEntity.getCollisionCircle().setPosition(center.clone());
             playerEntity.setInput(new RealtimeMultiplayerGame.Input.Keyboard());
             playerEntity.setColor("4");
+            playerEntity.setTest(this);
 
             // playerEntity.addTraitAndExecute(new BubbleDots.traits.GravityTrait());
 
@@ -150,6 +172,7 @@
         shouldUpdatePlayer: function (aClientid, data) {
             var entity = this.fieldController.getEntityWithid(data.payload.entityid);
             entity.input.deconstructInputBitmask(data.payload.input);
+            entity.setTest(this);
         },
 
         /**

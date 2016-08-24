@@ -54,7 +54,7 @@
 //			them.radius = newRadius;
 //			them.collisionCircle.setRadius( newRadius );
 
-            them.acceleration.translatePoint(collisionNormal.multiply(them.velocityMax * 0.9));
+             them.acceleration.translatePoint(collisionNormal.multiply(1));
         }
 
     };

@@ -17,14 +17,16 @@
 (function () {
     BubbleDots.Constants = {
         ENTITY_DEFAULT_RADIUS: 17,
-        GAME_WIDTH: 700,
-        GAME_HEIGHT: 450,
+        BULLET_DEFAULT_RADIUS: 5,
+        GAME_WIDTH: 1024,
+        GAME_HEIGHT: 768,
         MAX_CIRCLES: 200,
         GAME_DURATION: 1000 * 300,
 
         ENTITY_TYPES: {
             CANDY_ENTITY: 1 << 0,
-            PLAYER_ENTITY: 1 << 1
+            PLAYER_ENTITY: 1 << 1,
+            BULLET_ENTITY: 1 << 2
         },
 
         IMAGE_ASSETS: [

@@ -71,7 +71,7 @@
             var chaseTrait = this.addTraitAndExecute(new BubbleDots.traits.ChaseTrait());
             chaseTrait.setTarget(them);
             this.addTraitAndExecute(new BubbleDots.traits.PerlinNoiseTrait());
-//			me.tempColor();
+			// me.tempColor();
         }
 
     };

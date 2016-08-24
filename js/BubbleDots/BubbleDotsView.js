@@ -112,7 +112,7 @@
         },
 
         removeEntity: function (anEntityView) {
-            console.log("Removing Entity From CAAT", anEntityView);
+            // console.log("Removing Entity From CAAT", anEntityView);
             this.caatRoot.removeChild(anEntityView);
         },
 

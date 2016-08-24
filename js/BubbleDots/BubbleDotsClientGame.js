@@ -117,7 +117,7 @@
                 el.innerHTML = '<b>' + esc(message) + ':</b> ';
 
                 // Log if possible
-                console.log(message);
+                 console.log(message);
             };
 
             var esc = function (msg) {

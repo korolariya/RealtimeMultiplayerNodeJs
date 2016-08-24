@@ -65,14 +65,16 @@
         },
 
         handleAcceleration: function (speedFactor, gameClock, gameTick) {
-            this.velocity.translatePoint(this.acceleration);
+            if (this.collisionCircle) {
+                this.velocity.translatePoint(this.acceleration);
 //			this.velocity.limit(this.velocityMax);
-            this.velocity.multiply(this.velocityDamping);
+                this.velocity.multiply(this.velocityDamping);
 
-            this.collisionCircle.position.translatePoint(this.velocity);
-            this.position = this.collisionCircle.position.clone();
+                this.collisionCircle.position.translatePoint(this.velocity);
+                this.position = this.collisionCircle.position.clone();
 
-            this.acceleration.set(0, 0);
+                this.acceleration.set(0, 0);
+            }
         },
 
         /**
@@ -98,6 +100,7 @@
          * Deallocate memory
          */
         dealloc: function () {
+            console.log('destroy!');
             this.collisionCircle.dealloc();
             this.collisionCircle = null;
 
