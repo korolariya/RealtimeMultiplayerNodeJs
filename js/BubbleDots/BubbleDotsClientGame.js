@@ -39,6 +39,7 @@
             this.view.stats.update();
             this.view.update(this.gameClockReal);
             this.view.textfield.setText("Ping: " + this.netChannel.getLatency());
+            this.followCursor();
         },
 
         /**
@@ -69,6 +70,17 @@
         setupClientPlayer: function (anEntity) {
             anEntity.addTraitAndExecute(new RealtimeMultiplayerGame.controller.traits.KeyboardInputTrait());
             this.clientCharacter = anEntity;
+        },
+        /**
+         * Look at cursor
+         */
+        followCursor: function () {
+            if (this.clientCharacter) {
+                var position = {x: 0, y: 0};
+                position.x = this.clientCharacter.view.parent.scaleTX;
+                position.y = this.clientCharacter.view.parent.scaleTY;
+                this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
+            }
         },
 
         /**
@@ -117,7 +129,7 @@
                 el.innerHTML = '<b>' + esc(message) + ':</b> ';
 
                 // Log if possible
-                 console.log(message);
+                console.log(message);
             };
 
             var esc = function (msg) {

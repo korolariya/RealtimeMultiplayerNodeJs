@@ -171,6 +171,7 @@
         shouldUpdatePlayer: function (aClientid, data) {
             var entity = this.fieldController.getEntityWithid(data.payload.entityid);
             entity.input.deconstructInputBitmask(data.payload.input);
+            entity.input.lookAtVector = data.payload.mouse;
         },
 
         /**

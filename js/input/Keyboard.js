@@ -4,11 +4,32 @@
      * A helper class to detect the current state of the controls of the game.
      */
     RealtimeMultiplayerGame.Input.Keyboard = function () {
-        this.keys = {'tab': false, 'shift': false, 'space': false, 'up': false, 'down': false, 'left': false, "right": false }
+        this.keys = {
+            'tab': false,
+            'shift': false,
+            'space': false,
+            'up': false,
+            'down': false,
+            'left': false,
+            "right": false,
+            'mouse': null
+        };
+        this.lookAtPoint = {
+            x: 0, y: 0
+        };
+        this.lookAtVector = [];
     };
 
     RealtimeMultiplayerGame.Input.Keyboard.prototype = {
-        keyCodes: { '16': 'shift', '32': 'space', '37': 'left', '38': 'up', '39': 'right', '40': 'down', '9': 'tab'},
+        keyCodes: {
+            '16': 'shift',
+            '32': 'space',
+            '37': 'left',
+            '38': 'up',
+            '39': 'right',
+            '40': 'down',
+            '9': 'tab'
+        },
         keyPressed: 0,
 
         dealloc: function () {
@@ -19,7 +40,7 @@
             if (e.keyCode in this.keyCodes) {
                 // if we're already pressing down on the same key, then we don't want to increment
                 // our key pressed count
-                if (!this.keys[ this.keyCodes[ e.keyCode ] ]) {
+                if (!this.keys[this.keyCodes[e.keyCode]]) {
                     this.keyPressed++;
                 }
 
@@ -33,6 +54,12 @@
                 this.keyPressed--;
                 e.preventDefault();
             }
+        },
+        mouseMove: function (e) {
+            this.lookAtPoint.x = e.clientX;
+            this.lookAtPoint.y = e.clientY;
+            e.preventDefault();
+            // console.log('test');
         },
 
         /**
@@ -48,6 +75,9 @@
             document.addEventListener('keyup', function (e) {
                 that.keyUp(e);
             }, false);
+            document.addEventListener('mousemove', function (e) {
+                that.mouseMove(e);
+            }, false);
         },
 
         isKeyPressed: function () {
@@ -58,7 +88,7 @@
          * Map it to something useful so we know what it is
          */
         handler: function (keyCode, enabled) {
-            this.keys[ this.keyCodes[ keyCode] ] = enabled;
+            this.keys[this.keyCodes[keyCode]] = enabled;
         },
 
         /**
@@ -118,6 +148,20 @@
         },
         isTab: function () {
             return this.keys['tab'];
+        },
+        getLookAtPoint: function () {
+            return [this.lookAtPoint.x, this.lookAtPoint.y];
+        },
+        getLookAtVector: function () {
+            return [this.lookAtVector.x, this.lookAtVector.y];
+        },
+        getVector: function (begin, end) {
+            return {x: begin.x - end.x, y: begin.y - end.y};
+        },
+        calculateAngleRotation: function (position) {
+            this.lookAtVector = this.getVector(position, this.lookAtPoint);
+            return Math.atan2(this.lookAtVector.y, this.lookAtVector.x);
         }
+
     };
 })();

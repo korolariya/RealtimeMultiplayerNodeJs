@@ -5,16 +5,21 @@
         var self = this;
         setTimeout(function () {
             self.destroy();
-        }, 500)
+        }, 1000)
     };
 
     BubbleDots.BulletEntity.prototype = {
 
         updatePosition: function (speedFactor, gameClock, gameTick) {
             var moveSpeed = 0.5;
-            this.acceleration.y -= moveSpeed;
+            this.acceleration.x += moveSpeed * this.targetVector.x / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
+            this.acceleration.y += moveSpeed * this.targetVector.y / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
             this.handleAcceleration(speedFactor, gameClock, gameTick);
             // console.log(gameClock);
+        },
+        targetVector: {
+            x: 0,
+            y: 0
         },
         test: {},
         destroy: function (aClientid) {

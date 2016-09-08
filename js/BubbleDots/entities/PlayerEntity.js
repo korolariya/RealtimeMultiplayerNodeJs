@@ -70,7 +70,17 @@
             if (this.input.isSpace()) {
                 var self = this;
                 var radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
-                self.test.createBulletEntity(BubbleDots.BulletEntity, radius, self.test.getNextEntityID(), self.clientid, self.position);
+                var createPosition = self.position.clone();
+                createPosition.x += -40 * self.input.lookAtVector[0] / Math.sqrt(Math.pow(self.input.lookAtVector[0], 2) + Math.pow(self.input.lookAtVector[1], 2));
+                createPosition.y += -40* self.input.lookAtVector[1] / Math.sqrt(Math.pow(self.input.lookAtVector[0], 2) + Math.pow(self.input.lookAtVector[1], 2));
+
+
+                var bullet = self.test.createBulletEntity(BubbleDots.BulletEntity, radius, self.test.getNextEntityID(), self.clientid, createPosition);
+                bullet.targetVector.x = -self.input.lookAtVector[0];
+                bullet.targetVector.y = -self.input.lookAtVector[1];
+                console.log(self.input.lookAtVector);
+                console.log(self.position);
+                // console.log(this.input.getLookAtPoint());
             }
 
             // We're pressing up - apply thrust...

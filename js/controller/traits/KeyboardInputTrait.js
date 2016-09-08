@@ -68,7 +68,8 @@
         constructEntityDescription: function (gameTick, wantsFullUpdate) {
             return {
                 entityid: this.entityid,
-                input: this.input.constructInputBitmask()
+                input: this.input.constructInputBitmask(),
+                mouse: this.input.getLookAtVector()
             }
         },
 
