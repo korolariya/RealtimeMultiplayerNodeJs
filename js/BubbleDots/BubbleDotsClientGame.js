@@ -68,6 +68,7 @@
          * @param anEntity
          */
         setupClientPlayer: function (anEntity) {
+            console.log(this.view);
             anEntity.addTraitAndExecute(new RealtimeMultiplayerGame.controller.traits.KeyboardInputTrait());
             this.clientCharacter = anEntity;
         },
@@ -77,8 +78,12 @@
         followCursor: function () {
             if (this.clientCharacter) {
                 var position = {x: 0, y: 0};
-                position.x = this.clientCharacter.view.parent.scaleTX;
-                position.y = this.clientCharacter.view.parent.scaleTY;
+
+                position.x = this.view.caatRoot.x + this.clientCharacter.position.x;
+                position.y = this.view.caatRoot.y + this.clientCharacter.position.y;
+
+                console.log(position);
+
                 this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
             }
         },

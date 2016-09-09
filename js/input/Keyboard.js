@@ -59,7 +59,6 @@
             this.lookAtPoint.x = e.clientX;
             this.lookAtPoint.y = e.clientY;
             e.preventDefault();
-            // console.log('test');
         },
 
         /**
@@ -75,7 +74,7 @@
             document.addEventListener('keyup', function (e) {
                 that.keyUp(e);
             }, false);
-            document.addEventListener('mousemove', function (e) {
+            document.getElementById('gamecontainer').addEventListener('mousemove', function (e) {
                 that.mouseMove(e);
             }, false);
         },
@@ -159,6 +158,8 @@
             return {x: begin.x - end.x, y: begin.y - end.y};
         },
         calculateAngleRotation: function (position) {
+            // console.log('p:' + position.x + ' ' + position.y);
+            console.log('m:' + this.lookAtPoint.x + ' ' + this.lookAtPoint.y);
             this.lookAtVector = this.getVector(position, this.lookAtPoint);
             return Math.atan2(this.lookAtVector.y, this.lookAtVector.x);
         }

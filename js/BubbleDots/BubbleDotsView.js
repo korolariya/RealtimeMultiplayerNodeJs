@@ -88,8 +88,8 @@
 
         followFocusCharacter: function () {
             var camSpeed = 0.1;
-            var targetX = -this.focusCharacter.x + this.caatScene.width / 2 - 100;
-            var targetY = -this.focusCharacter.y + this.caatScene.height / 2 + 50;
+            var targetX = -this.focusCharacter.x + this.caatScene.width / 2;
+            var targetY = -this.focusCharacter.y + this.caatScene.height / 2;
             this.caatRoot.x -= (this.caatRoot.x - targetX) * camSpeed;
             this.caatRoot.y -= (this.caatRoot.y - targetY) * camSpeed * 2;
         },
