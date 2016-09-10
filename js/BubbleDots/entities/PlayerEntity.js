@@ -13,41 +13,12 @@
  1.0
  */
 (function () {
-    var count = 0;
     BubbleDots.PlayerEntity = function (anEntityid, aClientid) {
         BubbleDots.PlayerEntity.superclass.constructor.call(this, anEntityid, aClientid);
         this.entityType = BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY;
-        // this.initThrust();
     };
 
     BubbleDots.PlayerEntity.prototype = {
-        _isThrusting: false,		// We need a better variable name.
-        _thrustLevel: 0,
-
-        THRUST_DECREMENT: 0.001,		// How much to decrease thrust by
-        THRUST_FORCE: 0.3,			// How much force to apply every tick when applying thrust
-
-        initThrust: function () {
-            this._thrustLevel = 100.0;
-            this._isThrusting = false;
-        },
-
-        startThrust: function () {
-            this._isThrusting = true;
-//			this.velocity.y *= 0.5;
-        },
-
-        applyThrust: function () {
-            this._thrustLevel -= BubbleDots.PlayerEntity.prototype.THRUST_DECREMENT;
-            if (this._thrustLevel > 0.0) {
-                this.acceleration.y -= BubbleDots.PlayerEntity.prototype.THRUST_FORCE;
-            }
-        },
-
-        stopThrust: function () {
-            this._isThrusting = false;
-        },
-
         /**
          * Update position of this entity - this is only called on the serverside
          * @param {Number} speedFactor    A number signifying how much faster or slower we are moving than the target framerate
@@ -72,31 +43,17 @@
                 var radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
                 var createPosition = self.position.clone();
                 createPosition.x += -40 * self.input.lookAtVector[0] / Math.sqrt(Math.pow(self.input.lookAtVector[0], 2) + Math.pow(self.input.lookAtVector[1], 2));
-                createPosition.y += -40* self.input.lookAtVector[1] / Math.sqrt(Math.pow(self.input.lookAtVector[0], 2) + Math.pow(self.input.lookAtVector[1], 2));
+                createPosition.y += -40 * self.input.lookAtVector[1] / Math.sqrt(Math.pow(self.input.lookAtVector[0], 2) + Math.pow(self.input.lookAtVector[1], 2));
 
-
-                var bullet = self.test.createBulletEntity(BubbleDots.BulletEntity, radius, self.test.getNextEntityID(), self.clientid, createPosition);
-                bullet.targetVector.x = -self.input.lookAtVector[0];
-                bullet.targetVector.y = -self.input.lookAtVector[1];
-                console.log(self.input.lookAtVector);
-                console.log(self.position);
-                // console.log(this.input.getLookAtPoint());
+                self.test.createBulletEntity(
+                    BubbleDots.BulletEntity,
+                    radius,
+                    self.test.getNextEntityID(),
+                    self.clientid,
+                    createPosition,
+                    self.input.lookAtVector);
             }
 
-            // We're pressing up - apply thrust...
-            // Call startThrust if we were not thrusting before
-            // if (this.input.isUp()) {
-            //     if (!this._isThrusting) {
-            //         this.startThrust();
-            //     }
-            //
-            //     this.applyThrust();
-            // } else if (this._isThrusting) {
-            //     this.stopThrust();
-            // } else { // Default behavior - increase _thrustLevel
-            //     this._thrustLevel += BubbleDots.PlayerEntity.prototype.THRUST_DECREMENT * 2;
-            //     this._thrustLevel = Math.min(this._thrustLevel, 100);
-            // }
         },
 
         test: function () {

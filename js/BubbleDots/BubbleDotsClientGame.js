@@ -78,12 +78,8 @@
         followCursor: function () {
             if (this.clientCharacter) {
                 var position = {x: 0, y: 0};
-
                 position.x = this.view.caatRoot.x + this.clientCharacter.position.x;
                 position.y = this.view.caatRoot.y + this.clientCharacter.position.y;
-
-                console.log(position);
-
                 this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
             }
         },

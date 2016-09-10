@@ -2,10 +2,6 @@
     BubbleDots.BulletEntity = function (anEntityid, aClientid) {
         BubbleDots.BulletEntity.superclass.constructor.call(this, anEntityid, aClientid);
         this.entityType = BubbleDots.Constants.ENTITY_TYPES.BULLET_ENTITY;
-        var self = this;
-        setTimeout(function () {
-            self.destroy();
-        }, 1000)
     };
 
     BubbleDots.BulletEntity.prototype = {
@@ -21,16 +17,17 @@
             x: 0,
             y: 0
         },
-        test: {},
-        destroy: function (aClientid) {
-            var self = this;
-            self.test.collisionManager.removeCircle(self.getCollisionCircle());
-            self.test.fieldController.removeEntity(self.entityid);
-
+        onCollision: function (a, b, collisionNormal) {
         },
-        setTest: function (aTest) {
-            this.test = aTest;
+        setCollisionCircle: function (aCollisionCircle) {
+            this.collisionCircle = aCollisionCircle;
+            this.collisionCircle.setDelegate(this);
+            this.collisionCircle.setPosition(this.position.clone());
+            this.collisionCircle.setRadius(this.radius);
+            this.collisionCircle.collisionMask = 2;
+            this.collisionCircle.collisionGroup = 1;
         }
+
 
     };
     RealtimeMultiplayerGame.extend(BubbleDots.BulletEntity, BubbleDots.CircleEntity, null);
