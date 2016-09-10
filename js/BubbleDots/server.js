@@ -40,6 +40,7 @@ require("./traits/FoodTrait.js");
 require("./traits/PoisonTrait.js");
 require("./traits/BulletTrait.js");
 require("./traits/MobTrait.js");
+require("./traits/HuntTrait.js");
 require("./traits/PerlinNoiseTrait.js");
 require("./traits/ChaseTrait.js");
 require("./traits/GravityTrait.js");

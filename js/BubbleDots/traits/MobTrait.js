@@ -55,10 +55,14 @@
             var me = this === a ? a : b;
             var them = this === a ? b : a;
 
-            me.collisionCircle.collisionGroup = 0;
-            var trait = this.getTraitWithName("MobTrait");
-            trait._collisionManager.removeCircle(me.getCollisionCircle());
-            trait._fieldController.removeEntity(me.entityid);
+            if(them){
+               if(them.collisionCircle.collisionGroup != me.collisionCircle.collisionGroup){
+                   me.collisionCircle.collisionGroup = 0;
+                   var trait = this.getTraitWithName("MobTrait");
+                   trait._collisionManager.removeCircle(me.getCollisionCircle());
+                   trait._fieldController.removeEntity(me.entityid);
+               }
+            }
         }
 
     };

@@ -24,8 +24,8 @@
             this.collisionCircle.setDelegate(this);
             this.collisionCircle.setPosition(this.position.clone());
             this.collisionCircle.setRadius(this.radius);
-            this.collisionCircle.collisionMask = 2;
-            this.collisionCircle.collisionGroup = 1;
+            this.collisionCircle.collisionMask = 3;
+            this.collisionCircle.collisionGroup = 3;
         }
 
 

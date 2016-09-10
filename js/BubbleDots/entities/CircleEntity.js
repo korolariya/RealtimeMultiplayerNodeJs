@@ -122,12 +122,11 @@
          */
         setCollisionCircle: function (aCollisionCircle) {
             this.collisionCircle = aCollisionCircle;
-            this.collisionCircle.collisionMask = 1;
+            this.collisionCircle.collisionMask = 3;
             this.collisionCircle.collisionGroup = 2;
             this.collisionCircle.setDelegate(this);
             this.collisionCircle.setPosition(this.position.clone());
             this.collisionCircle.setRadius(this.radius);
-
         },
         getCollisionCircle: function () {
             return this.collisionCircle
