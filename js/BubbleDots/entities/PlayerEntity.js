@@ -26,11 +26,10 @@
          * @param {Number} gameTick        Current game tick (incrimented each frame)
          */
         updatePosition: function (speedFactor, gameClock, gameTick) {
-            this.handleInput(speedFactor);
+            this.handleInput(speedFactor, gameTick);
             BubbleDots.PlayerEntity.superclass.updatePosition.call(this, speedFactor, gameClock, gameTick);
         },
-        bullets: [],
-        handleInput: function (speedFactor) {
+        handleInput: function (speedFactor, gameTick) {
             var moveSpeed = 0.2;
 
             if (this.input.isLeft()) this.acceleration.x -= moveSpeed;
@@ -38,32 +37,15 @@
             if (this.input.isDown()) this.acceleration.y += moveSpeed;
             if (this.input.isUp()) this.acceleration.y -= moveSpeed;
 
-            if (this.input.isSpace()) {
-                var self = this;
-                var radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
-                var createPosition = self.position.clone();
-                createPosition.x += -40 * self.input.lookAtVector[0] / Math.sqrt(Math.pow(self.input.lookAtVector[0], 2) + Math.pow(self.input.lookAtVector[1], 2));
-                createPosition.y += -40 * self.input.lookAtVector[1] / Math.sqrt(Math.pow(self.input.lookAtVector[0], 2) + Math.pow(self.input.lookAtVector[1], 2));
-
-                self.test.createBulletEntity(
-                    BubbleDots.BulletEntity,
-                    radius,
-                    self.test.getNextEntityID(),
-                    self.clientid,
-                    createPosition,
-                    self.input.lookAtVector);
-            }
+            this.otherControls(gameTick);
 
         },
-
-        test: function () {
+        /**
+         * released by trait
+         */
+        otherControls: function () {
 
         },
-
-        setTest: function (aTest) {
-            this.test = aTest;
-        },
-
         ///// ACCESSORS
         /**
          * Set the CollisionCircle for this game entity.

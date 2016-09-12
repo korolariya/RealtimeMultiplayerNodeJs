@@ -2,6 +2,8 @@
     BubbleDots.BulletEntity = function (anEntityid, aClientid) {
         BubbleDots.BulletEntity.superclass.constructor.call(this, anEntityid, aClientid);
         this.entityType = BubbleDots.Constants.ENTITY_TYPES.BULLET_ENTITY;
+        this.radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
+        this.timeShot = 200;
     };
 
     BubbleDots.BulletEntity.prototype = {

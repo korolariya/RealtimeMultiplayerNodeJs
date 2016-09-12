@@ -74,7 +74,7 @@
 
                 // Randomly make the object 'food' or 'poison'
                 if (i % 5 === 0) {
-                    // entity.addTraitAndExecute(new BubbleDots.traits.PoisonTrait());
+                    entity.addTraitAndExecute(new BubbleDots.traits.PoisonTrait());
                 } else {
                     entity.addTraitAndExecute(new BubbleDots.traits.MobTrait(this.collisionManager, this.fieldController));
                     // entity.addTraitAndExecute(new BubbleDots.traits.PerlinNoiseTrait());
@@ -108,29 +108,6 @@
 
             return circleEntity;
         },
-        createBulletEntity: function (aBubbleDotEntityConstructor, aRadius, anEntityid, aClientid, position, targetVector) {
-            // Create the GameEntity
-            var circleEntity = new aBubbleDotEntityConstructor(anEntityid, aClientid);
-            var center = new RealtimeMultiplayerGame.model.Point(BubbleDots.Constants.GAME_WIDTH / 2, BubbleDots.Constants.GAME_HEIGHT / 2);
-            circleEntity.position.set(position.x, position.y);
-            var taggetPointVector = new RealtimeMultiplayerGame.model.Point(-targetVector[0], -targetVector[1]);
-            circleEntity.targetVector = taggetPointVector.clone();
-
-            circleEntity.addTraitAndExecute(new BubbleDots.traits.BulletTrait(this.collisionManager, this.fieldController));
-
-            // Create a randomly sized circle, that will represent this entity in the collision manager
-            var collisionCircle = new RealtimeMultiplayerGame.modules.circlecollision.PackedCircle();
-            circleEntity.setCollisionCircle(collisionCircle);
-            circleEntity.setRadius(aRadius);
-
-            // Place the circle and collision circle into corresponding containers
-            this.collisionManager.addCircle(circleEntity.getCollisionCircle());
-            this.fieldController.addEntity(circleEntity);
-
-            // circleEntity.setTest(this);
-            return circleEntity;
-        },
-
 
         /**
          * @inheritDoc
@@ -160,7 +137,9 @@
             playerEntity.getCollisionCircle().setPosition(center.clone());
             playerEntity.setInput(new RealtimeMultiplayerGame.Input.Keyboard());
             playerEntity.setColor("4");
-            playerEntity.setTest(this);
+            // playerEntity.setTest(this);
+
+            playerEntity.addTraitAndExecute(new BubbleDots.traits.ShotTrait(this));
 
             // playerEntity.addTraitAndExecute(new BubbleDots.traits.GravityTrait());
 

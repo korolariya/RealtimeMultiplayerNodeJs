@@ -100,7 +100,6 @@
          * Deallocate memory
          */
         dealloc: function () {
-            console.log('destroy!');
             // this.collisionCircle.dealloc();
             this.collisionCircle = null;
 

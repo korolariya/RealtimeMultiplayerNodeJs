@@ -131,6 +131,7 @@
             var actor = this.CAATSprite = new CAAT.SpriteActor()
                 .create()
                 .setSpriteImage(caatImage)
+                .setScale( 0.5, 0.5 )
                 .setLocation(entityDesc.x, entityDesc.y);
 
             return actor;

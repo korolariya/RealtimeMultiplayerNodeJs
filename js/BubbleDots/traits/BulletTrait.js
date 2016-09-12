@@ -57,7 +57,6 @@
             // We're either A or B, so perform a simple check against A to figure out which of the two objects we are
             var me = this === a ? a : b;
             var them = this === a ? b : a;
-            console.log('test');
         },
         destroy: function () {
             // var trait = this.getTraitWithName("BulletTrait");

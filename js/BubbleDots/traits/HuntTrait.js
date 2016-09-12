@@ -21,6 +21,7 @@
     BubbleDots.traits.HuntTrait.prototype = {
         displayName: "HuntTrait",					// Unique string name for this Trait
         _fieldController: null,
+        agrDistance: 400,
         /**
          * @inheritDoc
          */
@@ -31,29 +32,29 @@
 
 
         updatePosition: function (speedFactor, gameClock, gameTick) {
-            var trait = this.getTraitWithName("HuntTrait");
+            var hunter = this;
+            var trait = hunter.getTraitWithName("HuntTrait");
             var players = trait._fieldController.getPlayers();
-            var self = this;
 
-            var playersLength = [];
-            var playersVector = [];
-            players.forEach(function (item) {
-                var position = trait._fieldController.getPlayerWithid(item).position;
-                var vectorToPlayer = trait.getVector(self.position, position);
-                playersVector.push(vectorToPlayer);
-                var lengthToPlayer = trait.getLengthVector(vectorToPlayer);
-                playersLength.push(lengthToPlayer);
+            var playerMinLength = trait.agrDistance;
+            var resultVectorToPlayer = null;
+            var playersProcessed = 0;
+            players._keys.forEach(function (item) {
+                var playerPosition = trait._fieldController.getPlayerWithid(item).position;
+                var vectorToPlayer = trait.getVector(hunter.position, playerPosition);
+                var tempLengthToPlayer = trait.getLengthVector(vectorToPlayer);
+                if (playerMinLength > tempLengthToPlayer) {
+                    playerMinLength = tempLengthToPlayer;
+                    resultVectorToPlayer = vectorToPlayer;
+                }
+                playersProcessed++;
+                if (playersProcessed == players._keys.length) {
+                    if (resultVectorToPlayer !== null) {
+                        trait.followPlayer(hunter, resultVectorToPlayer);
+                    }
+                }
             });
 
-            if (playersLength.length) {
-
-                var minLengthToPlayerKey = trait.arrayMin(playersLength);
-
-                var vectorToMinPlayer = playersVector[minLengthToPlayerKey];
-                var moveSpeed = 0.05;
-                this.acceleration.x -= moveSpeed * vectorToMinPlayer.x / Math.sqrt(Math.pow(vectorToMinPlayer.x, 2) + Math.pow(vectorToMinPlayer.y, 2));
-                this.acceleration.y -= moveSpeed * vectorToMinPlayer.y / Math.sqrt(Math.pow(vectorToMinPlayer.x, 2) + Math.pow(vectorToMinPlayer.y, 2));
-            }
             trait.interceptedProperties._data.updatePosition.call(this, speedFactor, gameClock, gameTick);
         },
         getVector: function (begin, end) {
@@ -71,6 +72,11 @@
                 }
             }
             return key;
+        },
+        followPlayer: function (entity, vectorToPlayer) {
+            var moveSpeed = 0.05;
+            entity.acceleration.x -= moveSpeed * vectorToPlayer.x / Math.sqrt(Math.pow(vectorToPlayer.x, 2) + Math.pow(vectorToPlayer.y, 2));
+            entity.acceleration.y -= moveSpeed * vectorToPlayer.y / Math.sqrt(Math.pow(vectorToPlayer.x, 2) + Math.pow(vectorToPlayer.y, 2));
         }
 
 
