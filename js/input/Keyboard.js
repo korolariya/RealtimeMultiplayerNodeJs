@@ -12,7 +12,7 @@
             'down': false,
             'left': false,
             "right": false,
-            'mouse': null
+            'mouse': false
         };
         this.lookAtPoint = {
             x: 0, y: 0
@@ -78,6 +78,14 @@
             document.getElementById('gamecontainer').addEventListener('mousemove', function (e) {
                 that.mouseMove(e);
             }, false);
+            document.getElementById('gamecontainer').addEventListener('mousedown', function (e) {
+                that.keyPressed++;
+                that.keys.mouse = true;
+            }, false);
+            document.getElementById('gamecontainer').addEventListener('mouseup', function (e) {
+                that.keyPressed--;
+                that.keys.mouse = false;
+            }, false);
         },
 
         isKeyPressed: function () {
@@ -106,6 +114,7 @@
             if (this.keys['space']) input |= RealtimeMultiplayerGame.Constants.INPUT_BITMASK.SPACE;
             if (this.keys['shift']) input |= RealtimeMultiplayerGame.Constants.INPUT_BITMASK.SHIFT;
             if (this.keys['tab']) input |= RealtimeMultiplayerGame.Constants.INPUT_BITMASK.TAB;
+            if (this.keys['mouse']) input |= RealtimeMultiplayerGame.Constants.INPUT_BITMASK.MOUSE;
 
             return input;
         },
@@ -122,6 +131,7 @@
             this.keys['right'] = (inputBitmask & RealtimeMultiplayerGame.Constants.INPUT_BITMASK.RIGHT);
             this.keys['space'] = (inputBitmask & RealtimeMultiplayerGame.Constants.INPUT_BITMASK.SPACE);
             this.keys['shift'] = (inputBitmask & RealtimeMultiplayerGame.Constants.INPUT_BITMASK.SHIFT);
+            this.keys['mouse'] = (inputBitmask & RealtimeMultiplayerGame.Constants.INPUT_BITMASK.MOUSE);
         },
 
         /**
@@ -148,6 +158,9 @@
         },
         isTab: function () {
             return this.keys['tab'];
+        },
+        isMouse:function(){
+            return this.keys['mouse'];
         },
         getLookAtPoint: function () {
             return [this.lookAtPoint.x, this.lookAtPoint.y];

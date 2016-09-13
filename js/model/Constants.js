@@ -26,7 +26,7 @@
 
             /** @return {string} */
             GET_URI: function () {
-                return  RealtimeMultiplayerGame.Constants.SERVER_SETTING.SOCKET_PROTOCOL
+                return RealtimeMultiplayerGame.Constants.SERVER_SETTING.SOCKET_PROTOCOL
                     + "://" + RealtimeMultiplayerGame.Constants.SERVER_SETTING.SOCKET_DOMAIN
                     + ":" + RealtimeMultiplayerGame.Constants.SERVER_SETTING.SOCKET_PORT;
             }
@@ -62,7 +62,8 @@
             RIGHT: 1 << 3,
             SPACE: 1 << 4,
             SHIFT: 1 << 5,
-            TAB: 1 << 6
+            TAB: 1 << 6,
+            MOUSE: 1 << 7
         }
     }
 })();
