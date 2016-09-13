@@ -38,7 +38,7 @@
             if (this.input.isDown()) this.acceleration.y += moveSpeed;
             if (this.input.isUp()) this.acceleration.y -= moveSpeed;
 
-            if (this.input.isSpace()) {
+            if (this.input.isSpace()||this.input.isMouse()) {
                 var self = this;
                 var radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
                 var createPosition = self.position.clone();
