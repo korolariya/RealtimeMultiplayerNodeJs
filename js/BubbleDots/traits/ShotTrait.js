@@ -33,7 +33,7 @@
         },
         otherControls: function (gameTick) {
             var player = this;
-            if (player.input.isSpace()) {
+            if (player.input.isMouse()) {
                 var trait = player.getTraitWithName("ShotTrait");
                 if (!trait.lockedShot) {
                     trait.createBulletEntity(trait.calculatePositionShotGun(player), player.input.lookAtVector);
