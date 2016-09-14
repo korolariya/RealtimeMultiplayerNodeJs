@@ -51,7 +51,7 @@
                 var entityDescriptionString = entity.constructEntityDescription(this.gameTick);
                 fullDescriptionString += "|" + entityDescriptionString;
             }, this);
-
+            // console.log(fullDescriptionString);
             return fullDescriptionString;
         }
     }

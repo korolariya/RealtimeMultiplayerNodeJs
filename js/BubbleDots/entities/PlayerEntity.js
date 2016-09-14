@@ -16,6 +16,7 @@
     BubbleDots.PlayerEntity = function (anEntityid, aClientid) {
         BubbleDots.PlayerEntity.superclass.constructor.call(this, anEntityid, aClientid);
         this.entityType = BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY;
+        return this;
     };
 
     BubbleDots.PlayerEntity.prototype = {

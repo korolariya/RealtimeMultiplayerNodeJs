@@ -34,6 +34,7 @@
         view: null,
         lastReceivedEntityDescription: null,									// The last received entity description (set by renderAtTime)
 
+
         /**
          * Update the view's position
          */

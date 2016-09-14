@@ -40,6 +40,11 @@
             this.view.update(this.gameClockReal);
             this.view.textfield.setText("Ping: " + this.netChannel.getLatency());
             this.followCursor();
+
+            if(this.clientCharacter) {
+                this.view.healthPlayer.setText(this.clientCharacter.health);
+                console.log(this.clientCharacter);
+            }
         },
 
         /**
@@ -68,7 +73,6 @@
          * @param anEntity
          */
         setupClientPlayer: function (anEntity) {
-            console.log(this.view);
             anEntity.addTraitAndExecute(new RealtimeMultiplayerGame.controller.traits.KeyboardInputTrait());
             this.clientCharacter = anEntity;
         },

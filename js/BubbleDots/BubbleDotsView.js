@@ -35,6 +35,7 @@
         focusCharacter: null,				// The 'camera' will follow this player
         stats: null,				// Stats.js instance
         textfield: null,				// CAAT text
+        healthPlayer: null,
 
         // Methods
         setupCAAT: function () {
@@ -55,6 +56,7 @@
 
             this.setupTextfield();
             this.createGround();
+            this.healthPlayerField();
         },
 
         setupTextfield: function () {
@@ -69,6 +71,20 @@
             this.textfield.fillStyle = "#EEEEEE";
             this.textfield.setLocation(10, 10);
             this.caatScene.addChild(this.textfield);
+        },
+
+        healthPlayerField: function () {
+            // Create a healthPlayer
+            this.healthPlayer = new CAAT.TextActor();
+            this.healthPlayer.setFont("12px sans-serif");
+            this.healthPlayer.textAlign = "left";
+            this.healthPlayer.textBaseline = "top";
+            this.healthPlayer.calcTextSize(this.caatDirector);
+            this.healthPlayer.setSize(this.healthPlayer.textWidth, this.healthPlayer.textHeight);
+            this.healthPlayer.create();
+            this.healthPlayer.fillStyle = "#EEEEEE";
+            this.healthPlayer.setLocation(100, 10);
+            this.caatScene.addChild(this.healthPlayer);
         },
 
         /**
@@ -131,7 +147,7 @@
             var actor = this.CAATSprite = new CAAT.SpriteActor()
                 .create()
                 .setSpriteImage(caatImage)
-                .setScale( 0.5, 0.5 )
+                .setScale(0.5, 0.5)
                 .setLocation(entityDesc.x, entityDesc.y);
 
             return actor;

@@ -20,6 +20,13 @@
         this.originalColor = null;
         this.velocity = new RealtimeMultiplayerGame.model.Point(0, 0);
         this.acceleration = new RealtimeMultiplayerGame.model.Point(0, 0);
+        this.health = 100;
+
+        var circle = this;
+        setInterval(function () {
+            circle.health--;
+        }, 1000);
+
         return this;
     };
 
@@ -110,6 +117,7 @@
             var entityDesc = BubbleDots.CircleEntity.superclass.constructEntityDescription.call(this);
             entityDesc += ',' + ~~(this.scale * 100);
             entityDesc += ',' + this.color;
+            entityDesc += ',' + this.health;
 
             return entityDesc;
         },
