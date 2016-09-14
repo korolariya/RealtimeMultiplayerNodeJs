@@ -3,17 +3,33 @@
         BubbleDots.BulletEntity.superclass.constructor.call(this, anEntityid, aClientid);
         this.entityType = BubbleDots.Constants.ENTITY_TYPES.BULLET_ENTITY;
         this.radius = BubbleDots.Constants.BULLET_DEFAULT_RADIUS;
-        this.timeShot = 200;
+        this.timeShot = 1000;
+        this.live = false;
+        this.timeBirth = 0;
+        this.speed = 1;
     };
 
     BubbleDots.BulletEntity.prototype = {
 
         updatePosition: function (speedFactor, gameClock, gameTick) {
-            var moveSpeed = 0.5;
-            this.acceleration.x += moveSpeed * this.targetVector.x / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
-            this.acceleration.y += moveSpeed * this.targetVector.y / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
+            // var moveSpeed = 0.5;
+            this.acceleration.x += this.speed * this.targetVector.x / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
+            this.acceleration.y += this.speed * this.targetVector.y / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
             this.handleAcceleration(speedFactor, gameClock, gameTick);
-            // console.log(gameClock);
+            if (!this.live) {
+                this.live = true;
+                this.timeBirth = gameClock;
+            }
+            if (this.live) {
+                if (this.timeBirth + this.timeShot <= gameClock) {
+                    this.destroy();
+                }
+            }
+        },
+        destroy: function () {
+            var trait = this.getTraitWithName("BulletTrait");
+            trait._collisionManager.removeCircle(this.getCollisionCircle());
+            trait._fieldController.removeEntity(this.entityid);
         },
         targetVector: {
             x: 0,

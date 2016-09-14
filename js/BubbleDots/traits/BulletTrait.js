@@ -17,10 +17,6 @@
         BubbleDots.traits.BulletTrait.superclass.constructor.call(this);
         this._collisionManager = aCollisionManager;
         this._fieldController = aFieldController;
-        var self = this;
-        setTimeout(function () {
-            self.destroy();
-        }, 1000);
     };
 
     BubbleDots.traits.BulletTrait.prototype = {
@@ -28,13 +24,14 @@
         color: "2",
         _collisionManager: null,
         _fieldController: null,
+        damage: 25,
 
         /**
          * @inheritDoc
          */
         attach: function (anEntity) {
             BubbleDots.traits.BulletTrait.superclass.attach.call(this, anEntity);
-            this.intercept(['onCollision', 'color', 'destroy']);
+            this.intercept(['onCollision', 'color']);
         },
 
         /**
@@ -57,12 +54,31 @@
             // We're either A or B, so perform a simple check against A to figure out which of the two objects we are
             var me = this === a ? a : b;
             var them = this === a ? b : a;
+
+            if (them) {
+                var mob = them.getTraitWithName("MobTrait");
+                var hunter = them.getTraitWithName("HuntTrait");
+                var trait = me.getTraitWithName("BulletTrait");
+                var targetTrait = them.getTraitWithName("BulletTrait");
+                if (mob) {
+                    mob.hp -= trait.damage;
+                    them.acceleration.translatePoint(collisionNormal.multiply(-1));
+                    if (hunter) {
+                        hunter.agrDistance = 1000;
+                    }
+
+                    if (mob.hp <= 0) {
+                        trait.destroyEntity(them);
+                    }
+                }
+                if (!targetTrait) {
+                    trait.destroyEntity(me);
+                }
+            }
         },
-        destroy: function () {
-            // var trait = this.getTraitWithName("BulletTrait");
-            // console.log(this.attachedEntity);
-            this._collisionManager.removeCircle(this.attachedEntity.getCollisionCircle());
-            this._fieldController.removeEntity(this.attachedEntity.entityid);
+        destroyEntity: function (entity) {
+            this._collisionManager.removeCircle(entity.getCollisionCircle());
+            this._fieldController.removeEntity(entity.entityid);
         }
 
     };

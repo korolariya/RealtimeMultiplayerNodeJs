@@ -24,6 +24,7 @@
         color: "3",
         _collisionManager: null,
         _fieldController: null,
+        hp:100,
 
         /**
          * @inheritDoc
@@ -55,14 +56,6 @@
             var me = this === a ? a : b;
             var them = this === a ? b : a;
 
-            if(them){
-               if(them.collisionCircle.collisionGroup != me.collisionCircle.collisionGroup){
-                   me.collisionCircle.collisionGroup = 0;
-                   var trait = this.getTraitWithName("MobTrait");
-                   trait._collisionManager.removeCircle(me.getCollisionCircle());
-                   trait._fieldController.removeEntity(me.entityid);
-               }
-            }
         }
 
     };

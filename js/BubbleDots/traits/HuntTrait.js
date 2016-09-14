@@ -22,6 +22,8 @@
         displayName: "HuntTrait",					// Unique string name for this Trait
         _fieldController: null,
         agrDistance: 400,
+        vectorToNearestPlayer: {x: 0, y: 0},
+        chase: false,
         /**
          * @inheritDoc
          */
@@ -34,8 +36,20 @@
         updatePosition: function (speedFactor, gameClock, gameTick) {
             var hunter = this;
             var trait = hunter.getTraitWithName("HuntTrait");
-            var players = trait._fieldController.getPlayers();
 
+            if (gameClock % 5 === 0) {
+                trait.getVectorToNearestPlayer(hunter);
+            }
+
+            if (trait.chase) {
+                trait.followPlayer(hunter, trait.vectorToNearestPlayer);
+            }
+
+            trait.interceptedProperties._data.updatePosition.call(this, speedFactor, gameClock, gameTick);
+        },
+        getVectorToNearestPlayer: function (hunter) {
+            var trait = this;
+            var players = trait._fieldController.getPlayers();
             var playerMinLength = trait.agrDistance;
             var resultVectorToPlayer = null;
             var playersProcessed = 0;
@@ -50,28 +64,20 @@
                 playersProcessed++;
                 if (playersProcessed == players._keys.length) {
                     if (resultVectorToPlayer !== null) {
-                        trait.followPlayer(hunter, resultVectorToPlayer);
+                        trait.vectorToNearestPlayer = resultVectorToPlayer;
+                        trait.chase = true;
+                    }else{
+                        trait.chase = false;
                     }
                 }
-            });
 
-            trait.interceptedProperties._data.updatePosition.call(this, speedFactor, gameClock, gameTick);
+            });
         },
         getVector: function (begin, end) {
             return {x: begin.x - end.x, y: begin.y - end.y};
         },
         getLengthVector: function (vector) {
             return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2));
-        },
-        arrayMin: function arrayMin(arr) {
-            var len = arr.length, key = 0, min = arr[0];
-            while (len--) {
-                if (arr[len] < min) {
-                    min = arr[len];
-                    key = len;
-                }
-            }
-            return key;
         },
         followPlayer: function (entity, vectorToPlayer) {
             var moveSpeed = 0.05;

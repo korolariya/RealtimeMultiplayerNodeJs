@@ -23,6 +23,8 @@
         color: "2",
         _serverGame: null,
         lockedShot: false,
+        nexShotTime: 10,
+        shotTime: 0,
 
         /**
          * @inheritDoc
@@ -37,6 +39,11 @@
                 var trait = player.getTraitWithName("ShotTrait");
                 if (!trait.lockedShot) {
                     trait.createBulletEntity(trait.calculatePositionShotGun(player), player.input.lookAtVector);
+                    trait.shotTime = gameTick;
+                } else {
+                    if (trait.shotTime + trait.nexShotTime <= gameTick) {
+                        trait.disableLockShot();
+                    }
                 }
             }
         },
@@ -63,10 +70,9 @@
             // Place the circle and collision circle into corresponding containers
             trait._serverGame.collisionManager.addCircle(gunEntity.getCollisionCircle());
             trait._serverGame.fieldController.addEntity(gunEntity);
+
             trait.enableLockShot();
-            setTimeout(function () {
-                trait.disableLockShot();
-            }, gunEntity.timeShot);
+
 
             return gunEntity;
         },
