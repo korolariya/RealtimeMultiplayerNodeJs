@@ -13,10 +13,11 @@
 (function () {
     BubbleDots.namespace("BubbleDots.traits");
 
-    BubbleDots.traits.MobTrait = function (aCollisionManager, aFieldController) {
+    BubbleDots.traits.MobTrait = function (server) {
         BubbleDots.traits.MobTrait.superclass.constructor.call(this);
-        this._collisionManager = aCollisionManager;
-        this._fieldController = aFieldController;
+        this._collisionManager = server.collisionManager;
+        this._fieldController = server.fieldController;
+        this.server = server;
     };
 
     BubbleDots.traits.MobTrait.prototype = {
@@ -24,7 +25,10 @@
         color: "3",
         _collisionManager: null,
         _fieldController: null,
-        hp:100,
+        hp: 100,
+        damage: 10,
+        timeLastAttack: 0,
+        timeAttack: 100,
 
         /**
          * @inheritDoc
@@ -56,6 +60,21 @@
             var me = this === a ? a : b;
             var them = this === a ? b : a;
 
+            if (them.entityType == BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY) {
+                var mobTrait = me.getTraitWithName("MobTrait");
+
+                if (mobTrait.server.getGameTick() >= mobTrait.timeLastAttack) {
+                    var nextHealth = them.getHealth() - mobTrait.damage;
+                    them.setHealth((nextHealth > 0) ? nextHealth : 0);
+                    mobTrait.timeLastAttack = mobTrait.server.getGameTick() + mobTrait.timeAttack;
+                }
+                if (!them.getHealth()) {
+                    var start = new RealtimeMultiplayerGame.model.Point(512, 384);
+                    them.collisionCircle.position = start.clone();
+                    them.position = them.collisionCircle.position.clone();
+                    them.setHealth(100);
+                }
+            }
         }
 
     };

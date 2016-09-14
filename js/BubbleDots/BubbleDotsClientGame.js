@@ -41,9 +41,8 @@
             this.view.textfield.setText("Ping: " + this.netChannel.getLatency());
             this.followCursor();
 
-            if(this.clientCharacter) {
-                this.view.healthPlayer.setText(this.clientCharacter.health);
-                console.log(this.clientCharacter);
+            if (this.clientCharacter) {
+                this.view.healthPlayer.setText(this.clientCharacter.getHealth());
             }
         },
 
@@ -55,6 +54,7 @@
             // Create a new BubbleDots entity
             var newEntity = new BubbleDots.CircleEntity(entityDesc.entityid, entityDesc.clientid);
             newEntity.position.set(entityDesc.x, entityDesc.y);
+            newEntity.setHealth(entityDesc.health);
 
             var entityView = this.view.createEntityView(entityDesc);
             newEntity.setView(entityView);
@@ -120,6 +120,7 @@
             entityDescription.y = +entityDescAsArray[4];
             entityDescription.scale = +entityDescAsArray[5];
             entityDescription.color = entityDescAsArray[6];
+            entityDescription.health = entityDescAsArray[7];
             return entityDescription;
         },
 

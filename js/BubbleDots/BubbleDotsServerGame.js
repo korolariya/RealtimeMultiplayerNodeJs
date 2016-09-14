@@ -76,7 +76,7 @@
                 if (i % 5 === 0) {
                     entity.addTraitAndExecute(new BubbleDots.traits.PoisonTrait());
                 } else {
-                    entity.addTraitAndExecute(new BubbleDots.traits.MobTrait(this.collisionManager, this.fieldController));
+                    entity.addTraitAndExecute(new BubbleDots.traits.MobTrait(this));
                     // entity.addTraitAndExecute(new BubbleDots.traits.PerlinNoiseTrait());
                     entity.addTraitAndExecute(new BubbleDots.traits.HuntTrait(this.fieldController));
                 }

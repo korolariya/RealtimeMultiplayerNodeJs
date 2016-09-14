@@ -74,6 +74,17 @@
                 if (!targetTrait) {
                     trait.destroyEntity(me);
                 }
+                if(them.entityType == BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY){
+                    var nextHealth = them.getHealth() - trait.damage;
+                    them.setHealth((nextHealth > 0) ? nextHealth : 0);
+                    if (!them.getHealth()) {
+                        var start = new RealtimeMultiplayerGame.model.Point(512, 384);
+                        them.collisionCircle.position = start.clone();
+                        them.position = them.collisionCircle.position.clone();
+                        them.setHealth(100);
+                    }
+                    them.acceleration.translatePoint(collisionNormal.multiply(-1));
+                }
             }
         },
         destroyEntity: function (entity) {

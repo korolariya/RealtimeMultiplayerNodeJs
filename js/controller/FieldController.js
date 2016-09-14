@@ -48,6 +48,7 @@
                 entity.position.x = newPosition.x;
                 entity.position.y = newPosition.y;
                 entity.rotation = newRotation;
+                entity.setHealth(newEntityDescription.health);
                 entity.lastReceivedEntityDescription = newEntityDescription;
             } else {
                 console.log("(FieldController)::updateEntity - Error: Cannot find entity with entityid", entityid);

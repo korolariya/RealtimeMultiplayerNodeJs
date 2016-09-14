@@ -22,11 +22,6 @@
         this.acceleration = new RealtimeMultiplayerGame.model.Point(0, 0);
         this.health = 100;
 
-        var circle = this;
-        setInterval(function () {
-            circle.health--;
-        }, 1000);
-
         return this;
     };
 
@@ -117,9 +112,15 @@
             var entityDesc = BubbleDots.CircleEntity.superclass.constructEntityDescription.call(this);
             entityDesc += ',' + ~~(this.scale * 100);
             entityDesc += ',' + this.color;
-            entityDesc += ',' + this.health;
+            entityDesc += ',' + this.getHealth();
 
             return entityDesc;
+        },
+        getHealth: function () {
+            return this.health;
+        },
+        setHealth: function (health) {
+            this.health = health;
         },
 
         ///// ACCESSORS
