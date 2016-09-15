@@ -38,7 +38,7 @@
             if (player.input.isMouse()) {
                 var trait = player.getTraitWithName("ShotTrait");
                 if (!trait.lockedShot) {
-                    trait.createBulletEntity(trait.calculatePositionShotGun(player), player.input.lookAtVector);
+                    trait.createBulletEntity(trait.calculatePositionShotGun(player), player.input.lookAtVector, player.velocity);
                     trait.shotTime = gameTick;
                 } else {
                     if (trait.shotTime + trait.nexShotTime <= gameTick) {
@@ -54,7 +54,7 @@
             position.y += -40 * player.input.lookAtVector[1] / Math.sqrt(Math.pow(player.input.lookAtVector[0], 2) + Math.pow(player.input.lookAtVector[1], 2));
             return position;
         },
-        createBulletEntity: function (position, targetVector) {
+        createBulletEntity: function (position, targetVector, playerVelocity) {
             var trait = this;
             // // Create the GameEntity
             var gunEntity = new BubbleDots.BulletEntity(trait._serverGame.getNextEntityID(), RealtimeMultiplayerGame.Constants.SERVER_SETTING.CLIENT_ID);
@@ -66,6 +66,8 @@
             var collisionCircle = new RealtimeMultiplayerGame.modules.circlecollision.PackedCircle();
             gunEntity.setCollisionCircle(collisionCircle);
             gunEntity.setRadius(BubbleDots.Constants.BULLET_DEFAULT_RADIUS);
+
+            gunEntity.playerVelocity = playerVelocity;
 
             // Place the circle and collision circle into corresponding containers
             trait._serverGame.collisionManager.addCircle(gunEntity.getCollisionCircle());

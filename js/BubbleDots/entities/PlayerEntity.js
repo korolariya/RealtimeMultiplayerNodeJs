@@ -20,6 +20,8 @@
     };
 
     BubbleDots.PlayerEntity.prototype = {
+        speed:0.2,
+
         /**
          * Update position of this entity - this is only called on the serverside
          * @param {Number} speedFactor    A number signifying how much faster or slower we are moving than the target framerate
@@ -31,12 +33,11 @@
             BubbleDots.PlayerEntity.superclass.updatePosition.call(this, speedFactor, gameClock, gameTick);
         },
         handleInput: function (speedFactor, gameTick) {
-            var moveSpeed = 0.2;
 
-            if (this.input.isLeft()) this.acceleration.x -= moveSpeed;
-            if (this.input.isRight()) this.acceleration.x += moveSpeed;
-            if (this.input.isDown()) this.acceleration.y += moveSpeed;
-            if (this.input.isUp()) this.acceleration.y -= moveSpeed;
+            if (this.input.isLeft()) this.acceleration.x -= this.speed;
+            if (this.input.isRight()) this.acceleration.x += this.speed;
+            if (this.input.isDown()) this.acceleration.y += this.speed;
+            if (this.input.isUp()) this.acceleration.y -= this.speed;
 
             this.otherControls(gameTick);
 

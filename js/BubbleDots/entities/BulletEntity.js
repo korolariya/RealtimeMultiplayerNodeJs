@@ -6,15 +6,22 @@
         this.timeShot = 1000;
         this.live = false;
         this.timeBirth = 0;
-        this.speed = 1;
+        this.speed = 10;
+        this.playerVelocity = new RealtimeMultiplayerGame.model.Point(0, 0);
     };
 
     BubbleDots.BulletEntity.prototype = {
 
         updatePosition: function (speedFactor, gameClock, gameTick) {
             // var moveSpeed = 0.5;
+
+            this.velocity = this.playerVelocity.clone();
+
             this.acceleration.x += this.speed * this.targetVector.x / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
             this.acceleration.y += this.speed * this.targetVector.y / Math.sqrt(Math.pow(this.targetVector.x, 2) + Math.pow(this.targetVector.y, 2));
+
+
+
             this.handleAcceleration(speedFactor, gameClock, gameTick);
             if (!this.live) {
                 this.live = true;
