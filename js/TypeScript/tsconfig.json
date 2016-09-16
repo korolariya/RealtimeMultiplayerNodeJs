@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outFile": "tsc.js",
+        "sourceMap": true
+    },
+    "files": [
+//        "script.ts",
+        "Server/server.ts"
+//        "BubbleDotsApp.ts"
+    ]
+}
