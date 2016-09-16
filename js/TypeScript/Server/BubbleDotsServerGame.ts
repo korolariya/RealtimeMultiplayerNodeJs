@@ -5,8 +5,8 @@ namespace BubbleDots {
         constructor() {
             super();
             // this.setGameDuration(Constants.GAME_DURATION);
-            // this.setupCollisionManager();
-            // this.setupRandomField();
+            this.setupCollisionManager();
+            this.setupRandomField();
         }
 
         public setupCollisionManager() {

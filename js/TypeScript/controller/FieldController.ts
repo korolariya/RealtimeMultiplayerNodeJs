@@ -17,7 +17,7 @@ namespace RealtimeMultiplayerGame.Controller {
          */
         public players: any = null;
 
-        public view:any;
+        public view: any;
 
         /**
          * Update all entities
@@ -110,10 +110,10 @@ namespace RealtimeMultiplayerGame.Controller {
          * It's used to remove entities that expired in between two updates
          * @param activeEntities
          */
-        public removeExpiredEntities(activeEntities:any) {
+        public removeExpiredEntities(activeEntities: any) {
             var entityKeysArray = this.entities._keys;
             var i = entityKeysArray.length;
-            var key:number;
+            var key: number;
             var totalRemoved = 0;
 
             while (i--) {
@@ -141,13 +141,13 @@ namespace RealtimeMultiplayerGame.Controller {
         };
 
         public dealloc() {
-            this.players.forEach(function (key:number, entity:any) {
+            this.players.forEach(function (key: number, entity: any) {
                 this.removePlayer(entity.clientid);
             }, this);
             this.players.dealloc();
             this.players = null;
 
-            this.entities.forEach(function (key:number, entity:any) {
+            this.entities.forEach(function (key: number, entity: any) {
                 this.removeEntity(entity.entityid);
             }, this);
             this.entities.dealloc();
@@ -161,7 +161,7 @@ namespace RealtimeMultiplayerGame.Controller {
         /**
          *  Will be called on client side
          */
-        public   setView(aView:any) {
+        public   setView(aView: any) {
             // Checks passed
             this.view = aView;
         };
@@ -188,5 +188,4 @@ namespace RealtimeMultiplayerGame.Controller {
 
 
     }
-
 }
