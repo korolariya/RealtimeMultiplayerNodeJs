@@ -1,26 +1,11 @@
-/**
- File:
- BubbleDots.CircleEntity
- Created By:
- Mario Gonzalez
- Project:
- BubbleDots
- Abstract:
- This is the base entity for the demo game
- Basic Usage:
+namespace BubbleDots {
+    export class PlayerEntity extends CircleEntity{
+        constructor(anEntityid, aClientid) {
+            super(anEntityid, aClientid);
+            this.entityType = BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY;
+        }
 
- Version:
- 1.0
- */
-(function () {
-    BubbleDots.PlayerEntity = function (anEntityid, aClientid) {
-        BubbleDots.PlayerEntity.superclass.constructor.call(this, anEntityid, aClientid);
-        this.entityType = BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY;
-        return this;
-    };
-
-    BubbleDots.PlayerEntity.prototype = {
-        speed:0.2,
+        public speed: number = 0.2;
 
         /**
          * Update position of this entity - this is only called on the serverside
@@ -28,11 +13,12 @@
          * @param {Number} gameClock    Current game time in seconds (zero based)
          * @param {Number} gameTick        Current game tick (incrimented each frame)
          */
-        updatePosition: function (speedFactor, gameClock, gameTick) {
+        public updatePosition(speedFactor, gameClock, gameTick) {
             this.handleInput(speedFactor, gameTick);
-            BubbleDots.PlayerEntity.superclass.updatePosition.call(this, speedFactor, gameClock, gameTick);
-        },
-        handleInput: function (speedFactor, gameTick) {
+            super.updatePosition(speedFactor, gameClock, gameTick);
+        };
+
+        public handleInput(speedFactor, gameTick) {
 
             if (this.input.isLeft()) this.acceleration.x -= this.speed;
             if (this.input.isRight()) this.acceleration.x += this.speed;
@@ -41,29 +27,30 @@
 
             this.otherControls(gameTick);
 
-        },
+        };
+
         /**
          * released by trait
          */
-        otherControls: function () {
+        public otherControls() {
 
-        },
+        };
+
         ///// ACCESSORS
         /**
          * Set the CollisionCircle for this game entity.
          * @param aCollisionCircle
          */
-        setCollisionCircle: function (aCollisionCircle) {
-            BubbleDots.PlayerEntity.superclass.setCollisionCircle.call(this, aCollisionCircle);
+        public setCollisionCircle(aCollisionCircle) {
+            super.setCollisionCircle(aCollisionCircle);
             this.collisionCircle.collisionMask = 2;
             this.collisionCircle.collisionGroup = 1;
             this.collisionCircle.isFixed = true;
-        },
-        setInput: function (input) {
+        };
+
+        public setInput(input) {
             this.input = input;
         }
-    };
+    }
+}
 
-    // extend RealtimeMultiplayerGame.model.GameEntity
-    RealtimeMultiplayerGame.extend(BubbleDots.PlayerEntity, BubbleDots.CircleEntity, null);
-})();

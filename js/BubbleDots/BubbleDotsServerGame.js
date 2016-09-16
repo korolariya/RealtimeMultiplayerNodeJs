@@ -77,12 +77,12 @@
                     entity.addTraitAndExecute(new BubbleDots.traits.PoisonTrait());
                 } else {
                     entity.addTraitAndExecute(new BubbleDots.traits.MobTrait(this));
-                    // entity.addTraitAndExecute(new BubbleDots.traits.PerlinNoiseTrait());
+                    // entity.addTraitAndExecute(new BubbleDots.Traits.PerlinNoiseTrait());
                     entity.addTraitAndExecute(new BubbleDots.traits.HuntTrait(this.fieldController));
                 }
 
 
-                //				entity.addTraitAndExecute( new BubbleDots.traits.PerlinNoiseTrait() );
+                //				entity.addTraitAndExecute( new BubbleDots.Traits.PerlinNoiseTrait() );
             }
         },
 
@@ -141,10 +141,10 @@
 
             playerEntity.addTraitAndExecute(new BubbleDots.traits.ShotTrait(this));
 
-            // playerEntity.addTraitAndExecute(new BubbleDots.traits.GravityTrait());
+            // playerEntity.addTraitAndExecute(new BubbleDots.Traits.GravityTrait());
 
             // Set the boundary trait and the rule it will use
-            // var boundaryTrait = new BubbleDots.traits.BoundaryTrait(this.collisionManager);
+            // var boundaryTrait = new BubbleDots.Traits.BoundaryTrait(this.collisionManager);
             // boundaryTrait.setBoundaryRule(RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_CONSTRAIN_Y);
             // playerEntity.addTraitAndExecute(boundaryTrait);
 

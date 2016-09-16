@@ -1,4 +1,4 @@
-/// <reference path="DefinitelyTyped/jquery/jquery.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
 (function () {
     // Callback for when browse is ready

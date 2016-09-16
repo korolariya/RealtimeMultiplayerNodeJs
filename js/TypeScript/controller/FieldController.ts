@@ -1,9 +1,9 @@
-import SortedLookupTable from "../lib/SortedLookupTable.d.ts";
+/// <reference path="../lib/SortedLookupTable.d.ts" />
 namespace RealtimeMultiplayerGame.Controller {
     export class FieldController {
         constructor() {
-            this.entities = new SortedLookupTable();
-            this.players = new SortedLookupTable();
+             this.entities = new SortedLookupTable();
+             this.players = new SortedLookupTable();
         }
 
         /**

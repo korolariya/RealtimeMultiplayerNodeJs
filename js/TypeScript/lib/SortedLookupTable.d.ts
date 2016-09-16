@@ -1,2 +1,9 @@
-declare let SortedLookupTable:any;
-export default SortedLookupTable;
+interface SortedLookupTableInterface{
+
+}
+declare module "SortedLookupTableModule" {
+    export = SortedLookupTable;
+}
+declare class SortedLookupTable implements SortedLookupTableInterface{
+
+}

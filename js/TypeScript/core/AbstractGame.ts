@@ -1,5 +1,6 @@
 /// <reference path="../controller/FieldController.ts" />
 namespace RealtimeMultiplayerGame {
+
     export abstract class AbstractGame {
         constructor() {
             this.setupNetChannel();
@@ -70,7 +71,8 @@ namespace RealtimeMultiplayerGame {
             clearTimeout(this.intervalGameTick);
         }
 
-        public  setGameDuration() {
+        public  setGameDuration(gameDuration:number) {
+            this.gameDuration = gameDuration;
         };
 
         // Memory

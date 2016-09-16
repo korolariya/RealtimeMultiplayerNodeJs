@@ -1,36 +1,23 @@
-/**
- File:
- server.js
- Created By:
- Mario Gonzalez
- Project:
- RealtimeMultiplayerNodeJS
- Abstract:
- This is the base server module for starting RealtimeMultiplayerGame
- Basic Usage:
- node server.js
- Version:
- 1.0
- */
-/// <reference path="../DefinitelyTyped/node/node-4.d.ts" />
+
+/// <reference path="../../../typings/index.d.ts" />
 /// <reference path="./BubbleDotsServerGame.ts" />
 
 // require("../../lib/SortedLookupTable.js");
 // require("../../core/RealtimeMutliplayerGame.js");
-// require("../../model/Point.js");
-// require("../../model/Constants.js");
+// require("../../model/Point.ts");
+// require("../../model/Constants.ts");
 // require("../../model/NetChannelMessage.js");
-// require("../../model/GameEntity.js");
+// require("../../model/GameEntity.ts");
 // require("../../model/WorldEntityDescription.js");
 // require("../../network/ServerNetChannel.js");
 // require("../../network/Client.js");
-// require("../../lib/circlecollision/Circle.js");
-// require("../../lib/circlecollision/CircleManager.js");
+// require("../../lib/circlecollision/Circle.ts");
+// require("../../lib/circlecollision/CircleManager.ts");
 // require("../../controller/FieldController.js");
 // require("../../core/AbstractGame.js");
 // require("../../core/AbstractServerGame.js");
 // require("../../input/Keyboard.js");
-// require("../../controller/traits/BaseTrait.js");
+// require("../../controller/Traits/BaseTrait.js");
 
 
 //require("v8-profiler");
@@ -39,16 +26,16 @@
 // require("./entities/CircleEntity.js");
 // require("./entities/PlayerEntity.js");
 // require("./entities/BulletEntity.js");
-// require("./traits/FoodTrait.js");
-// require("./traits/PoisonTrait.js");
-// require("./traits/BulletTrait.js");
-// require("./traits/MobTrait.js");
-// require("./traits/HuntTrait.js");
-// require("./traits/ShotTrait.js");
-// require("./traits/PerlinNoiseTrait.js");
-// require("./traits/ChaseTrait.js");
-// require("./traits/GravityTrait.js");
-// require("./traits/BoundaryTrait.js");
+// require("./Traits/FoodTrait.js");
+// require("./Traits/PoisonTrait.ts");
+// require("./Traits/BulletTrait.js");
+// require("./Traits/MobTrait.ts");
+// require("./Traits/HuntTrait.ts");
+// require("./Traits/ShotTrait.js");
+// require("./Traits/PerlinNoiseTrait.js");
+// require("./Traits/ChaseTrait.js");
+// require("./Traits/GravityTrait.js");
+// require("./Traits/BoundaryTrait.js");
 // require("./BubbleDotsServerGame.js");
 
 var game = new BubbleDots.DemoServerGame();
