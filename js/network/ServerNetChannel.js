@@ -188,7 +188,7 @@
 
         /**
          * Callback from socket.io when a client has disconnected
-         * @param client
+         * @param clientConnection
          */
         onSocketClosed: function (clientConnection) {
             var client = this.clients.objectForKey(clientConnection.sessionId);

@@ -1,68 +1,69 @@
-/**
- File:
- Client.js
- Created By:
- Mario Gonzalez
- Project:
- RealtimeMultiplayerNodeJS
- Abstract:
- Stores information about a connection to a client
- Basic Usage:
- var aNewClient = new Client(this, connection, false);
+namespace RealtimeMultiplayerGame.network {
+    import SortedLookupTable = RealtimeMultiplayerGame.lib.SortedLookupTable;
+    export class Client {
+        constructor(aConnection, aClientid) {
+            this.clientid = aClientid;
+            this.connection = aConnection;
 
- // Add to our list of connected users
- this.clients[clientid] = aNewClient;
+            if (!this.connection.sessionId) { // No sessionId variable means we're not using socket.io - just set that property to use our clientid
+                this.connection.sessionId = aClientid;
+            }
 
- // broadcast message to all clients
- for( var clientid in this.clients ) {
-		this.clients[clientid].sendMessage(encodedMessage);
-	}
- */
-(function () {
-
-    var BUFFER_MASK = RealtimeMultiplayerGame.Constants.CLIENT_SETTING.MAX_BUFFER;
-
-    // Retrieve the namespace
-    RealtimeMultiplayerGame.namespace("RealtimeMultiplayerGame.network");
-
-    RealtimeMultiplayerGame.network.Client = function (aConnection, aClientid) {
-        this.clientid = aClientid;
-        this.connection = aConnection;
-
-        if (!this.connection.sessionId) { // No sessionId variable means we're not using socket.io - just set that property to use our clientid
-            this.connection.sessionId = aClientid;
+            this.stagnantEntities = new SortedLookupTable();
         }
 
-        this.stagnantEntities = new SortedLookupTable();
-        return this;
-    };
-
-    RealtimeMultiplayerGame.network.Client.prototype = {
-        connection: null,				// SocketIO connection for this specific client
-        clientid: -1,				// UUID for this client
+        /**
+         * SocketIO connection for this specific client
+         */
+        public connection: any = null;
+        /**
+         *  UUID for this client
+         * @type {number}
+         */
+        public clientid = -1;
         // Configuration
-        cl_updateRate: RealtimeMultiplayerGame.Constants.CLIENT_SETTING.UPDATE_RATE,		// How often we can receive messages per sec
-        outgoingMessageBuffer: [],				// Store array of incoming messages, slots are resused
-        outgoingSequenceNumber: 0,                // Number of total outgoing messages received
-        incomingMessageBuffer: [],              	// Store array of incoming messages, slots are resused
-        incomingSequenceNumber: 0,                // Number of total incoming messages received
-        entityDescriptionBuffer: [],				// Store WorldEntityDescriptions before ready to send
+        public cl_updateRate: RealtimeMultiplayerGame.Constants.CLIENT_SETTING.UPDATE_RATE;		// How often we can receive messages per sec
+        /**
+         * Store array of incoming messages, slots are resused
+         * @type {Array}
+         */
+        public outgoingMessageBuffer = [];
+        /**
+         * Number of total outgoing messages received
+         * @type {number}
+         */
+        public outgoingSequenceNumber = 0;
+        /**
+         * Store array of incoming messages, slots are resused
+         */
+        public incomingMessageBuffer = [];
+        /**
+         * Number of total incoming messages received
+         * @type {number}
+         */
+        public incomingSequenceNumber = 0;
+        /**
+         * Store WorldEntityDescriptions before ready to send
+         */
+        public entityDescriptionBuffer = [];
 
-        // Used to track if we can send a new message to this user
-        lastSentMessageTime: -1,
-        lastReceivedMessageTime: -1,
+        /**
+         * Used to track if we can send a new message to this user
+         * @type {number}
+         */
+        public lastSentMessageTime = -1;
+        public lastReceivedMessageTime = -1;
 
         // Entries that have not changed since the last frame
-        stagnantEntities: null,
+        public stagnantEntities: null;
 
-        onMessage: function (messageData) {
-
+        public onMessage(messageData) {
             var messageIndex = this.incomingSequenceNumber & RealtimeMultiplayerGame.Constants.CLIENT_SETTING.UPDATE_RATE;
-//			this.incomingMessageBuffer[messageIndex] = messageData;
             this.incomingSequenceNumber++;
-        },
+        };
 
-        dealloc: function () {
+
+        public dealloc() {
             this.outgoingMessageBuffer = null;
             this.incomingMessageBuffer = null;
             this.entityDescriptionBuffer = null;
@@ -70,14 +71,14 @@
             this.stagnantEntities = null;
             this.connection.removeAllListeners();
             this.connection = null;
-        },
+        };
 
         /**
          * Compares the worldDescription to the last one we sent - removes unchanged values
          * @param worldDescription A description of all the entities currently in the world
          * @param gameClock           The current (zero-based) game clock
          */
-        compressDeltaAndQueueMessage: function (worldDescription, gameClock) {
+        public compressDeltaAndQueueMessage(worldDescription, gameClock) {
             //debugger;
             var allEntities = worldDescription.entities,
                 len = allEntities.length;
@@ -98,9 +99,6 @@
                     }
                 }
 
-                // Store for next time
-                //this.stagnentEntities.setObjectForKey(anEntityDesc, entityid);
-
                 // Only send if it has new data
                 if (hasNewData) {
                     resultDescStr += "|" + anEntityDescStr;
@@ -112,43 +110,38 @@
             entityDescriptionObject.gameTick = worldDescription.gameTick;
 
             this.entityDescriptionBuffer.push(entityDescriptionObject);
-        },
+        };
 
         /**
          * Sends the current cmdBuffer
          */
-        sendQueuedCommands: function (gameClock) {
-            var messageContent = {
+        public sendQueuedCommands(gameClock) {
+            var message = {
                 gameClock: gameClock,
                 id: RealtimeMultiplayerGame.Constants.SERVER_SETTING.CLIENT_ID,
                 seq: this.outgoingSequenceNumber,
                 cmd: RealtimeMultiplayerGame.Constants.CMDS.SERVER_FULL_UPDATE,
                 data: this.entityDescriptionBuffer
             };
-            var anEncodedMessage = messageContent;	// Encode?
 
-            this.sendMessage(anEncodedMessage, gameClock);
+            this.sendMessage(message, gameClock);
 
             this.entityDescriptionBuffer = [];
-        },
+        };
 
         /**
          * Send an encoded (and delta compressed) message to the connection
-         * @param anEncodedMessage Bison Encoded message
+         * @param message
          * @param gameClock           The current (zero-based) game clock
          */
-        sendMessage: function (anEncodedMessage, gameClock) {
-//			anEncodedMessage = RealtimeMultiplayerGame.modules.bison.encode(anEncodedMessage)
+        public sendMessage(message, gameClock) {
             this.lastSentMessageTime = gameClock;
 
-            // Store inside our outgoingMessageBuffer - which holds 'MESSAGE_BUFFER_MASK' lerped number of messages
-//			var messageIndex = this.outgoingSequenceNumber & BUFFER_MASK;
-//			this.outgoingMessageBuffer[messageIndex] = anEncodedMessage;
-
             // Send and increment our message count
-            this.connection.json.send(anEncodedMessage);
+            this.connection.json.send(message);
             this.outgoingSequenceNumber++;
-        },
+        };
+
 
 ///// MEMORY
 
@@ -158,31 +151,33 @@
          * Returns true if its ok to send this client a new message
          * @param {Number} gameClock
          */
-        canSendMessage: function (gameClock) {
+        canSendMessage(gameClock) {
             return (gameClock - this.lastSentMessageTime) > this.cl_updateRate;
-        },
+        };
 
         /**
          * Returns the sessionId as created by Socket.io for this client
          * @return {String} A hash representing the session id
          */
-        getSessionId: function () {
+        getSessionId() {
             return this.connection.sessionId;
-        },
+        };
 
         /**
          * UUID given to us by ServerNetChannel
          * This is used instead of sessionid since we send this around a lot and sessionid is a 12 digit string
          */
-        getClientid: function () {
+        getClientid() {
             return this.clientid;
-        },
+        };
 
         /**
          * @return {
 		 */
-        getConnection: function () {
+        getConnection() {
             return this.connection;
-        }
+        };
+
+
     }
-})();
+}

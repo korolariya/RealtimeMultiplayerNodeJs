@@ -1,4 +1,7 @@
 /// <reference path="../lib/SortedLookupTable.ts" />
+/// <reference path="../network/Client.ts" />
+/// <reference path="../network/ClientNetChannel.ts" />
+/// <reference path="../model/NetChannelMessage.ts" />
 namespace RealtimeMultiplayerGame.network {
     import SortedLookupTable = RealtimeMultiplayerGame.lib.SortedLookupTable;
     export class ServerNetChannel {
@@ -19,6 +22,9 @@ namespace RealtimeMultiplayerGame.network {
         public maxClients = 8;
         public maxChars = 128;
         public socketClients:any = [];
+        public wsServer:any = null;
+        public removeClient:any;
+
 
         // Methods
         /**
@@ -75,29 +81,29 @@ namespace RealtimeMultiplayerGame.network {
             this.socketClients = [];
             var that = this;
 
-            this.$ = new ws.Server(false);
-            this.$.onConnect = function (conn) {
+            this.wsServer = new ws.Server(false);
+            this.wsServer.onConnect = function (conn:any) {
                 var aClient = new RealtimeMultiplayerGame.network.Client(conn, RealtimeMultiplayerGame.network.ServerNetChannel.getNextClientID());
 
                 // Send the first message back to the client, which gives them a clientid
                 var connectMessage = new RealtimeMultiplayerGame.model.NetChannelMessage(++this.outgoingSequenceNumber, aClient.getClientid(), true, RealtimeMultiplayerGame.Constants.CMDS.SERVER_CONNECT, {gameClock: that.delegate.getGameClock()});
                 connectMessage.messageTime = that.delegate.getGameClock();
-                aClient.getConnection().json.send(RealtimeMultiplayerGame.modules.bison.encode(connectMessage));
+                aClient.getConnection().json.send(connectMessage);
 
                 // Add to our list of connected users
                 that.clients.setObjectForKey(aClient, aClient.getSessionId());
             };
 
-            this.$.onMessage = function (conn, msg) {
+            this.wsServer.onMessage = function (conn:any, msg:any) {
                 console.log("MESSAGE RECEIVED", msg);
             };
 
-            this.$.onClose = function (conn) {
+            this.wsServer.onClose = function (conn:any) {
                 that.removeClient(conn.$clientID);
                 console.log("Disconnected!");
             };
 
-            this.removeClient = function (id) {
+            this.removeClient = function (id:any) {
                 if (this.socketClients[id]) {
                     this.clientCount--;
                     this.socketClients[id].remove();
@@ -105,7 +111,7 @@ namespace RealtimeMultiplayerGame.network {
                 }
             };
 
-            this.$.listen(RealtimeMultiplayerGame.Constants.SERVER_SETTING.SOCKET_PORT);
+            this.wsServer.listen(RealtimeMultiplayerGame.Constants.SERVER_SETTING.SOCKET_PORT);
         };
 
 
@@ -238,41 +244,9 @@ namespace RealtimeMultiplayerGame.network {
          * @param {RealtimeMultiplayerGame.network.ServerNetChannelDelegateProtocol} aDelegate A delegate that conforms to RealtimeMultiplayerGame.network.ServerNetChannelDelegateProtocol
          */
         setDelegate(aDelegate: any) {
-            var theInterface = RealtimeMultiplayerGame.network.ServerNetChannelDelegateProtocol;
-            for (var member in theInterface) {
-                if ((typeof aDelegate[member] != typeof theInterface[member])) {
-                    console.log("object failed to implement interface member " + member);
-                    return false;
-                }
-            }
-
             // Checks passed
             this.delegate = aDelegate;
-        }
-
-
-        // /**
-        //  * Required methods for the ServerNetChannel delegate
-        //  */
-        // RealtimeMultiplayerGame.network.ServerNetChannelDelegateProtocol = {
-        //     setupCmdMap: function () {
-        //     },
-        //     shouldUpdatePlayer: function (clientID, data) {
-        //     },
-        //     shouldAddPlayer: function (clientID, data) {
-        //     },
-        //     shouldRemovePlayer: function (clientID) {
-        //     },
-        //     getNextEntityID: function () {
-        //     },
-        //     getGameClock: function () {
-        //     },
-        //     log: function () {
-        //     }
-        // }
-
+        };
 
     }
 }
-
-//     var nextClientID = RealtimeMultiplayerGame.Constants.SERVER_SETTING.CLIENT_ID;

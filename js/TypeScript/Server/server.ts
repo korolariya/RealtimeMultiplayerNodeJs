@@ -5,7 +5,7 @@
 require("../../lib/SortedLookupTable.js");
 require("../../model/WorldEntityDescription.js");
 // require("../../network/ServerNetChannel.ts");
-// require("../../network/Client.js");
+// require("../../network/Client.ts");
 
 var game = new BubbleDots.DemoServerGame();
 game.startGameClock();
