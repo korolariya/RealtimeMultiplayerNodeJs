@@ -1,9 +1,9 @@
-/// <reference path="../../lib/SortedLookupTable.d.ts" />
+/// <reference path="../../lib/SortedLookupTable.ts" />
 namespace RealtimeMultiplayerGame.controller.traits {
     export class BaseTrait {
 
         constructor() {
-            this.interceptedProperties = new SortedLookupTable();
+            this.interceptedProperties = new RealtimeMultiplayerGame.lib.SortedLookupTable();
         }
 
         /**
@@ -15,17 +15,17 @@ namespace RealtimeMultiplayerGame.controller.traits {
          * Trait host
          * @type {any}
          */
-        public attachedEntity:any = null;
+        public attachedEntity: any = null;
         /**
          * Store detach setTimeout
          * @type {number}
          */
-        public detachTimeout:number = 0;
+        public detachTimeout: number = 0;
         /**
          * Unique string name for this Trait
          * @type {string}
          */
-        public displayName:string = "BaseTrait";
+        public displayName: string = "BaseTrait";
 
         /**
          * If a trait can stack, then it doesn't matter if it's already attached.
@@ -35,13 +35,13 @@ namespace RealtimeMultiplayerGame.controller.traits {
          */
         public canStack: boolean = false;
 
-        public interceptProperties:any;
+        public interceptProperties: any;
 
         /**
          * Attach the trait to the host object
          * @param anEntity
          */
-        public attach(anEntity:any) {
+        public attach(anEntity: any) {
             this.attachedEntity = anEntity;
         };
 
@@ -56,7 +56,7 @@ namespace RealtimeMultiplayerGame.controller.traits {
         /**
          * Detaches a trait from an 'attachedEntity' and restores the properties
          */
-        public detach(force:any) {
+        public detach(force: any) {
             clearTimeout(this.detachTimeout);
             this.restore();
 
@@ -69,7 +69,7 @@ namespace RealtimeMultiplayerGame.controller.traits {
          * Detach after N milliseconds, for example freeze trait might call this to unfreeze
          * @param aDelay
          */
-        public detachAfterDelay(aDelay:any) {
+        public detachAfterDelay(aDelay: any) {
             this.detachTimeout = setTimeout(()=> {
                 this.attachedEntity.removeTraitWithName(this.displayName);
             }, aDelay);
@@ -81,7 +81,7 @@ namespace RealtimeMultiplayerGame.controller.traits {
          * We can reset all the properties by calling, this.restore();
          * @param arrayOfProperties
          */
-        public intercept(arrayOfProperties:any) {
+        public intercept(arrayOfProperties: any) {
             var len = arrayOfProperties.length;
             while (len--) {
                 var aKey = arrayOfProperties[len];
@@ -95,7 +95,7 @@ namespace RealtimeMultiplayerGame.controller.traits {
          * Be sure to call this when removing the trait!
          */
         public  restore() {
-            this.interceptedProperties.forEach((key:any, aStoredProperty:any) => {
+            this.interceptedProperties.forEach((key: any, aStoredProperty: any) => {
                 this.attachedEntity[key] = aStoredProperty;
             });
         };

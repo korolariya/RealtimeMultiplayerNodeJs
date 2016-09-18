@@ -102,7 +102,7 @@ namespace RealtimeMultiplayerGame.modules.circlecollision {
         };
 
 
-        public pushAllCirclesTowardTarget(aTarget) {
+        public pushAllCirclesTowardTarget(aTarget:any) {
             var v = new RealtimeMultiplayerGame.model.Point().set(0, 0),
                 circleList = this.allCircles,
                 len = circleList.length;
@@ -210,7 +210,7 @@ namespace RealtimeMultiplayerGame.modules.circlecollision {
          * @param {RealtimeMultiplayerGame.modules.circlecollision.PackedCircle}    aCircle Circle to perform boundary check against
          * @param {Number} boundsRule    A bitmask representing the boundary rules
          */
-        public handleBoundaryForCircle(aCircle, boundsRule) {
+        public handleBoundaryForCircle(aCircle:Circle, boundsRule:number) {
             if (boundsRule === undefined) {
                 throw "No Boundary rule defined!";
             }
@@ -222,10 +222,10 @@ namespace RealtimeMultiplayerGame.modules.circlecollision {
 
             // Toggle these on and off,
             // Wrap and bounce, are opposite behaviors so pick one or the other for each axis, or bad things will happen.
-            var wrapXMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_WRAP_X;
-            var wrapYMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_WRAP_Y;
-            var constrainXMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_CONSTRAIN_X;
-            var constrainYMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.prototype.BOUNDARY_CONSTRAIN_Y;
+            var wrapXMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.BOUNDARY_WRAP_X;
+            var wrapYMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.BOUNDARY_WRAP_Y;
+            var constrainXMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.BOUNDARY_CONSTRAIN_X;
+            var constrainYMask = RealtimeMultiplayerGame.modules.circlecollision.CircleManager.BOUNDARY_CONSTRAIN_Y;
 
             // Convert to bitmask - Uncomment the one you want, or concact your own :)
             // boundsRule = wrapXMask | wrapYMask;  // Wrap Y axis, but constrain horizontally
@@ -264,7 +264,7 @@ namespace RealtimeMultiplayerGame.modules.circlecollision {
          * Performs handleBoundaryForCircle on all circles
          * @param {Number} boundsRule    A bitmask representing the boundary rules
          */
-        public   handleBoundaryForAllCircles(boundsRule) {
+        public   handleBoundaryForAllCircles(boundsRule:number) {
             if (boundsRule === undefined) {
                 throw "handleBoundaryForAllCircles - No Bounds Rule defined!";
             }
@@ -292,12 +292,12 @@ namespace RealtimeMultiplayerGame.modules.circlecollision {
          * @param {RealtimeMultiplayerGame.modules.circlecollision.PackedCircle}    circleA
          * @param {RealtimeMultiplayerGame.modules.circlecollision.PackedCircle}    circleB
          */
-        public static circlesCanCollide(circleA, circleB): boolean {
+        public static circlesCanCollide(circleA:Circle, circleB:Circle): boolean {
             if (!circleA || !circleB || circleA === circleB) return false; 					// one is null (will be deleted next loop), or both point to same obj.
             if (circleA.delegate == null || circleB.delegate == null) return false;			// This circle will be removed next loop, it's entity is already removed
 
             //both are fixed
-            if (circleA.isFixed & circleB.isFixed) return false;
+            if (circleA.isFixed === circleB.isFixed) return false;
 
             //They dont want to collide
             if ((circleA.collisionGroup & circleB.collisionMask) == 0) return false;
@@ -312,24 +312,24 @@ namespace RealtimeMultiplayerGame.modules.circlecollision {
             return this.allCircles
         };
 
-        public setBounds(x, y, w, h) {
+        public setBounds(x:any, y:any, w:any, h:any) {
             this.bounds.x = x;
             this.bounds.y = y;
             this.bounds.width = w;
             this.bounds.height = h;
         };
 
-        public setNumberOfCollisionPasses(value) {
+        public setNumberOfCollisionPasses(value:any) {
             this.numberOfCollisionPasses = value;
             return this;
         };
 
-        public    setNumberOfTargetingPasses(value) {
+        public    setNumberOfTargetingPasses(value:any) {
             this.numberOfTargetingPasses = value;
             return this;
         };
 
-        public    setCallback(block, scope) {
+        public    setCallback(block:any, scope:any) {
             this.collisionCallback = {'block': block, 'scope': scope};
         };
 

@@ -5,6 +5,9 @@
 /// <reference path="../Entities/CircleEntity.ts" />
 /// <reference path="../Entities/PlayerEntity.ts" />
 /// <reference path="../Traits/PoisonTrait.ts" />
+/// <reference path="../Traits/MobTrait.ts" />
+/// <reference path="../Traits/HuntTrait.ts" />
+/// <reference path="../input/Keyboard.ts" />
 namespace BubbleDots {
     export class DemoServerGame extends RealtimeMultiplayerGame.AbstractServerGame {
         constructor() {
@@ -55,8 +58,8 @@ namespace BubbleDots {
                 if (i % 5 === 0) {
                     entity.addTraitAndExecute(new BubbleDots.traits.PoisonTrait());
                 } else {
-                    entity.addTraitAndExecute(new BubbleDots.traits.MobTrait(this));
-                    entity.addTraitAndExecute(new BubbleDots.traits.HuntTrait(this.fieldController));
+                    entity.addTraitAndExecute(new BubbleDots.traits.MobTrait());
+                    entity.addTraitAndExecute(new BubbleDots.traits.HuntTrait());
                 }
             }
         };
@@ -108,7 +111,7 @@ namespace BubbleDots {
             playerEntity.getCollisionCircle().setPosition(center.clone());
             playerEntity.setInput(new RealtimeMultiplayerGame.Input.Keyboard());
             playerEntity.setColor("4");
-            playerEntity.addTraitAndExecute(new BubbleDots.traits.ShotTrait(this));
+            // playerEntity.addTraitAndExecute(new BubbleDots.traits.ShotTrait(this));
             this.fieldController.addPlayer(playerEntity);
         };
 

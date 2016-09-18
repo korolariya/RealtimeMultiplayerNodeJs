@@ -1,4 +1,5 @@
 /// <reference path="./AbstractGame.ts" />
+/// <reference path="../network/ServerNetChannel.ts" />
 namespace RealtimeMultiplayerGame {
     export class AbstractServerGame extends RealtimeMultiplayerGame.AbstractGame {
         constructor() {
@@ -19,7 +20,7 @@ namespace RealtimeMultiplayerGame {
 
         // Methods
         public   setupNetChannel() {
-            // this.netChannel = new RealtimeMultiplayerGame.network.ServerNetChannel(this);
+            this.netChannel = new RealtimeMultiplayerGame.network.ServerNetChannel(this); //TODO should be fixed
         };
 
         /**

@@ -41,7 +41,7 @@ namespace RealtimeMultiplayerGame {
         },
 
         // The client sends this bitmask to the server
-        // See (Keyboard.js)
+        // See (Keyboard.ts)
         INPUT_BITMASK: {
             UP: 1 << 0,
             DOWN: 1 << 1,

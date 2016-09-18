@@ -1,9 +1,9 @@
-/// <reference path="../lib/SortedLookupTable.d.ts" />
+/// <reference path="../lib/SortedLookupTable.ts" />
 namespace RealtimeMultiplayerGame.Controller {
     export class FieldController {
         constructor() {
-             this.entities = new SortedLookupTable();
-             this.players = new SortedLookupTable();
+             this.entities = new RealtimeMultiplayerGame.lib.SortedLookupTable();
+             this.players = new RealtimeMultiplayerGame.lib.SortedLookupTable();
         }
 
         /**
