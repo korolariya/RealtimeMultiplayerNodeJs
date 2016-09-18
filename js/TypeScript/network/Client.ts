@@ -1,7 +1,7 @@
 namespace RealtimeMultiplayerGame.network {
     import SortedLookupTable = RealtimeMultiplayerGame.lib.SortedLookupTable;
     export class Client {
-        constructor(aConnection, aClientid) {
+        constructor(aConnection:any, aClientid:any) {
             this.clientid = aClientid;
             this.connection = aConnection;
 
@@ -20,44 +20,44 @@ namespace RealtimeMultiplayerGame.network {
          *  UUID for this client
          * @type {number}
          */
-        public clientid = -1;
+        public clientid:any = -1;
         // Configuration
-        public cl_updateRate: RealtimeMultiplayerGame.Constants.CLIENT_SETTING.UPDATE_RATE;		// How often we can receive messages per sec
+        public cl_updateRate:any = RealtimeMultiplayerGame.Constants.CLIENT_SETTING.UPDATE_RATE;		// How often we can receive messages per sec
         /**
          * Store array of incoming messages, slots are resused
          * @type {Array}
          */
-        public outgoingMessageBuffer = [];
+        public outgoingMessageBuffer:any = [];
         /**
          * Number of total outgoing messages received
          * @type {number}
          */
-        public outgoingSequenceNumber = 0;
+        public outgoingSequenceNumber:any = 0;
         /**
          * Store array of incoming messages, slots are resused
          */
-        public incomingMessageBuffer = [];
+        public incomingMessageBuffer:any = [];
         /**
          * Number of total incoming messages received
          * @type {number}
          */
-        public incomingSequenceNumber = 0;
+        public incomingSequenceNumber:any = 0;
         /**
          * Store WorldEntityDescriptions before ready to send
          */
-        public entityDescriptionBuffer = [];
+        public entityDescriptionBuffer:any = [];
 
         /**
          * Used to track if we can send a new message to this user
          * @type {number}
          */
-        public lastSentMessageTime = -1;
-        public lastReceivedMessageTime = -1;
+        public lastSentMessageTime:any = -1;
+        public lastReceivedMessageTime:any = -1;
 
         // Entries that have not changed since the last frame
-        public stagnantEntities: null;
+        public stagnantEntities:any = null;
 
-        public onMessage(messageData) {
+        public onMessage(messageData:any) {
             var messageIndex = this.incomingSequenceNumber & RealtimeMultiplayerGame.Constants.CLIENT_SETTING.UPDATE_RATE;
             this.incomingSequenceNumber++;
         };
@@ -78,7 +78,7 @@ namespace RealtimeMultiplayerGame.network {
          * @param worldDescription A description of all the entities currently in the world
          * @param gameClock           The current (zero-based) game clock
          */
-        public compressDeltaAndQueueMessage(worldDescription, gameClock) {
+        public compressDeltaAndQueueMessage(worldDescription:any, gameClock:any) {
             //debugger;
             var allEntities = worldDescription.entities,
                 len = allEntities.length;
@@ -104,7 +104,7 @@ namespace RealtimeMultiplayerGame.network {
                     resultDescStr += "|" + anEntityDescStr;
                 }
             }
-            var entityDescriptionObject = {};
+            var entityDescriptionObject:any = {};
             entityDescriptionObject.entities = resultDescStr;
             entityDescriptionObject.gameClock = worldDescription.gameClock;
             entityDescriptionObject.gameTick = worldDescription.gameTick;
@@ -115,8 +115,8 @@ namespace RealtimeMultiplayerGame.network {
         /**
          * Sends the current cmdBuffer
          */
-        public sendQueuedCommands(gameClock) {
-            var message = {
+        public sendQueuedCommands(gameClock:any) {
+            var message:any = {
                 gameClock: gameClock,
                 id: RealtimeMultiplayerGame.Constants.SERVER_SETTING.CLIENT_ID,
                 seq: this.outgoingSequenceNumber,
@@ -134,7 +134,7 @@ namespace RealtimeMultiplayerGame.network {
          * @param message
          * @param gameClock           The current (zero-based) game clock
          */
-        public sendMessage(message, gameClock) {
+        public sendMessage(message:any, gameClock:any) {
             this.lastSentMessageTime = gameClock;
 
             // Send and increment our message count
@@ -151,7 +151,7 @@ namespace RealtimeMultiplayerGame.network {
          * Returns true if its ok to send this client a new message
          * @param {Number} gameClock
          */
-        canSendMessage(gameClock) {
+        canSendMessage(gameClock:any) {
             return (gameClock - this.lastSentMessageTime) > this.cl_updateRate;
         };
 

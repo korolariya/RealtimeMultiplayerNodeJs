@@ -1,6 +1,6 @@
 namespace RealtimeMultiplayerGame.model {
     export class NetChannelMessage {
-        constructor(aSequenceNumber, aClientid, isReliable, aCommandType, aPayload) {
+        constructor(aSequenceNumber: any, aClientid: any, isReliable: any, aCommandType: any, aPayload: any) {
             // Info
             this.seq = aSequenceNumber;
             this.id = aClientid; 					// Server gives us one when we first  connect to it
@@ -18,10 +18,13 @@ namespace RealtimeMultiplayerGame.model {
         // If not it can be overwritten by newer messages (for example moving is unreliable, because once it's outdates its worthless if new information exist)
         public isReliable = false;
         public cmd = 0;
-        public aPayload = null;
+        public payload: any = null;
         public seq = -1;
         public id = -1;
         public messageTime = -1;
+        public clientid: any;
+        public sequenceNumber: any;
+        public unencodedMessage: any;
 
         /**
          * Wrap the message with useful information before sending, optional BiSON or something can be used to compress the message

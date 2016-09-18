@@ -1,7 +1,8 @@
 namespace RealtimeMultiplayerGame.network {
+    import SortedLookupTable = RealtimeMultiplayerGame.lib.SortedLookupTable;
     var BUFFER_MASK = RealtimeMultiplayerGame.Constants.CLIENT_SETTING.MAX_BUFFER;
     export class ClientNetChannel {
-        constructor(aDelegate) {
+        constructor(aDelegate: any) {
             this.setDelegate(aDelegate);
             this.setupSocketIO();
             this.setupCmdMap();
@@ -11,65 +12,69 @@ namespace RealtimeMultiplayerGame.network {
          *  Object informed when ClientNetChannel does interesting stuff
          * @type {any}
          */
-        public delegate = null;
+        public delegate: any = null;
         /**
          * Reference to singluar Socket.IO instance
          * @type {any}
          */
-        public socketio = null;
+        public socketio: any = null;
         /**
          * A client id is set by the server on first connect
          * @type {any}
          */
-        public clientid = null;
+        public clientid: any = null;
 
         // Settings
         /**
          * How often we can receive messages per sec
          */
-        public cl_updateRate = RealtimeMultiplayerGame.Constants.CLIENT_SETTING.CMD_RATE;
+        public cl_updateRate: any = RealtimeMultiplayerGame.Constants.CLIENT_SETTING.CMD_RATE;
 
         // connection info
         /**
          * Current latency time from server
          * @type {number}
          */
-        public latency = 1000;
+        public latency: any = 1000;
         /**
          * Time of last sent message
          * @type {number}
          */
-        public lastSentTime = -1;
+        public lastSentTime: any = -1;
         /**
          * Time of last recieved message
          * @type {number}
          */
-        public lastRecievedTime = -1;
+        public lastRecievedTime: any = -1;
 
         // Data
         /**
          * Store last N messages to be sent
          * @type {Array}
          */
-        public messageBuffer = [];
-        public outgoingSequenceNumber = 0;
+        public messageBuffer: any = [];
+        public outgoingSequenceNumber: any = 0;
         /**
          * Store last N received WorldDescriptions
          * @type {Array}
          */
-        public incomingWorldUpdateBuffer = [];
+        public incomingWorldUpdateBuffer: any = [];
         /**
          * We sent a 'reliable' message and are waiting for acknowledgement that it was sent
          * @type {any}
          */
-        public reliableBuffer = null;
+        public reliableBuffer: any = null;
         /**
          * Map the CMD constants to functions
          * @type {{}}
          */
-        public cmdMap = {};
+        public cmdMap: any = {};
 
-        public setupSocketIO() {
+        public connection: any;
+
+        public lastReceivedTime: any;
+
+        public setupSocketIO():void {
             // debugger;
             this.socketio = new io.connect(RealtimeMultiplayerGame.Constants.SERVER_SETTING.GET_URI(), {
                 transports: ['websocket', 'xhr-polling', 'jsonp-polling'],
@@ -81,7 +86,7 @@ namespace RealtimeMultiplayerGame.network {
             this.socketio.on('connect', function () {
                 that.onSocketConnect()
             });
-            this.socketio.on('message', function (obj) {
+            this.socketio.on('message', function (obj: any) {
                 that.onSocketDidAcceptConnection(obj)
             });
             this.socketio.on('disconnect', function () {
@@ -94,16 +99,13 @@ namespace RealtimeMultiplayerGame.network {
             this.connection = new WebSocket("ws://localhost:" + RealtimeMultiplayerGame.Constants.SERVER_SETTING.SOCKET_PORT + "/");
             this.socketio = this.connection;
             this.connection.onopen = function () {
-                DemoHelloWorld.DemoClientGame.prototype.log("Connection.onopen");
             };
 
-            this.connection.onmessage = function (event) {
-                //DemoHelloWorld.DemoClientGame.prototype.log("Connection.onmessage");
-                var message = BISON.decode(event.data);
+            this.connection.onmessage = function (event: any) {
+                var message = event.data;
                 that.onSocketDidAcceptConnection(message);
             };
-            this.connection.onclose = function (event) {
-                DemoHelloWorld.DemoClientGame.prototype.log("Connection.onclose");
+            this.connection.onclose = function (event: any) {
                 that.onSocketDisconnect();
             };
         };
@@ -125,7 +127,7 @@ namespace RealtimeMultiplayerGame.network {
          * Called when ServerNetChannel has accepted your connection and given you a client id
          * This is only called once, use the info to set some properties
          */
-        public onSocketDidAcceptConnection(aNetChannelMessage) {
+        public onSocketDidAcceptConnection(aNetChannelMessage: any) {
 
             //  console.log("(ClientNetChannel)::onSocketDidAcceptConnection", aNetChannelMessage);
 
@@ -145,7 +147,7 @@ namespace RealtimeMultiplayerGame.network {
          * Called when Socket.io has received a new message
          * @param aNetChannelMessage
          */
-        public  onSocketMessage(aNetChannelMessage) {
+        public  onSocketMessage(aNetChannelMessage: any) {
             this.lastReceivedTime = this.delegate.getGameClock();
             this.adjustRate(aNetChannelMessage);
 
@@ -194,7 +196,7 @@ namespace RealtimeMultiplayerGame.network {
             if (this.reliableBuffer !== null) return;
 
             var hasReliableMessages = false;
-            var firstUnreliableMessageFound = null;
+            var firstUnreliableMessageFound: any = null;
 
             var len = this.messageBuffer.length;
             for (var i = 0; i < len; i++) {
@@ -221,7 +223,7 @@ namespace RealtimeMultiplayerGame.network {
          *
          * @param aNetChannelMessage
          */
-        public  onServerWorldUpdate(aNetChannelMessage) {
+        public  onServerWorldUpdate(aNetChannelMessage: any) {
             var len = aNetChannelMessage.data.length;
             var i = -1;
 
@@ -244,7 +246,7 @@ namespace RealtimeMultiplayerGame.network {
          * and creates SortedLookupTable out of it with the entityid's as the keys
          * @param {String} aWorldUpdateMessage
          */
-        public createWorldEntityDescriptionFromString(aWorldUpdateMessage) {
+        public createWorldEntityDescriptionFromString(aWorldUpdateMessage: any) {
             // Create a new WorldEntityDescription and store the clock and gametick in it
             var worldDescription = new SortedLookupTable();
             worldDescription.gameTick = aWorldUpdateMessage.gameTick;
@@ -273,7 +275,7 @@ namespace RealtimeMultiplayerGame.network {
          * Sends a message via socket.io
          * @param aMessageInstance
          */
-        public sendMessage(aMessageInstance) {
+        public sendMessage(aMessageInstance: any) {
             if (this.socketio == undefined) {
                 console.log("(ClientNetChannel)::sendMessage - socketio is undefined!");
                 return;
@@ -294,7 +296,9 @@ namespace RealtimeMultiplayerGame.network {
 
             this.socketio.json.send(aMessageInstance);
 
-            if (RealtimeMultiplayerGame.Constants.CLIENT_NETCHANNEL_DEBUG) console.log('(NetChannel) Sending Message, isReliable', aMessageInstance.isReliable, aMessageInstance);
+            if (RealtimeMultiplayerGame.Constants.DEBUG_SETTING.CLIENT_NETCHANNEL_DEBUG) {
+                console.log('(NetChannel) Sending Message, isReliable', aMessageInstance.isReliable, aMessageInstance);
+            }
         };
 
 
@@ -304,7 +308,7 @@ namespace RealtimeMultiplayerGame.network {
          * @param aCommandConstant
          * @param payload
          */
-        public addMessageToQueue(isReliable, aCommandConstant, payload) {
+        public addMessageToQueue(isReliable: any, aCommandConstant: any, payload: any) {
             // Create a NetChannelMessage
             var message = new RealtimeMultiplayerGame.model.NetChannelMessage(this.outgoingSequenceNumber, this.clientid, isReliable, aCommandConstant, payload);
 
@@ -324,7 +328,7 @@ namespace RealtimeMultiplayerGame.network {
          * Adjust the message chokerate based on latency
          * @param serverMessage
          */
-        public  adjustRate(serverMessage) {
+        public  adjustRate(serverMessage:any) {
             this.latency = serverMessage.gameClock - this.delegate.getGameClock();
         };
 
@@ -345,7 +349,7 @@ namespace RealtimeMultiplayerGame.network {
          * Set the NetChannelDelegate after validation
          * @param aDelegate
          */
-        public setDelegate(aDelegate) {
+        public setDelegate(aDelegate:any) {
             //TODO check instance
             // Checks passed
             this.delegate = aDelegate;
