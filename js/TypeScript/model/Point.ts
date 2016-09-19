@@ -33,7 +33,7 @@ namespace RealtimeMultiplayerGame.model {
          * @return {RealtimeMultiplayerGame.model.Point}
          */
         public  clone() {
-            var p = JSON.parse(JSON.stringify(this));
+            var p = new RealtimeMultiplayerGame.model.Point();
             p.set(this.x, this.y);
             return p;
         };

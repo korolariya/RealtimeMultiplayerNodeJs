@@ -20,7 +20,7 @@ namespace RealtimeMultiplayerGame {
 
         // Methods
         public   setupNetChannel() {
-            this.netChannel = new RealtimeMultiplayerGame.network.ServerNetChannel(this); //TODO should be fixed
+            this.netChannel = new RealtimeMultiplayerGame.network.ServerNetChannel(this);
         };
 
         /**

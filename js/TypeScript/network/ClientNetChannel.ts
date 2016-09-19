@@ -1,6 +1,6 @@
+/// <reference path="../model/Constants.ts" />
 namespace RealtimeMultiplayerGame.network {
     import SortedLookupTable = RealtimeMultiplayerGame.lib.SortedLookupTable;
-    var BUFFER_MASK = RealtimeMultiplayerGame.Constants.CLIENT_SETTING.MAX_BUFFER;
     export class ClientNetChannel {
         constructor(aDelegate: any) {
             this.setDelegate(aDelegate);
@@ -74,9 +74,11 @@ namespace RealtimeMultiplayerGame.network {
 
         public lastReceivedTime: any;
 
-        public setupSocketIO():void {
+        public nextUnreliable:any;
+
+        public setupSocketIO() {
             // debugger;
-            this.socketio = new io.connect(RealtimeMultiplayerGame.Constants.SERVER_SETTING.GET_URI(), {
+            this.socketio = io.connect(RealtimeMultiplayerGame.Constants.SERVER_SETTING.GET_URI(), {
                 transports: ['websocket', 'xhr-polling', 'jsonp-polling'],
                 reconnect: false,
                 rememberTransport: false
@@ -157,7 +159,7 @@ namespace RealtimeMultiplayerGame.network {
                     //  IF CALLED THIS IS A BUG
                 }
 
-                var messageIndex = aNetChannelMessage.seq & BUFFER_MASK;
+                var messageIndex = aNetChannelMessage.seq & RealtimeMultiplayerGame.Constants.CLIENT_SETTING.MAX_BUFFER;
                 var message = this.messageBuffer[messageIndex];
 
                 // Free up reliable buffer to allow for new message to be sent
@@ -167,7 +169,7 @@ namespace RealtimeMultiplayerGame.network {
 
                 // Remove from memory
                 this.messageBuffer[messageIndex] = null;
-                delete message;
+                message = null;
 
                 return;
             }
@@ -235,7 +237,7 @@ namespace RealtimeMultiplayerGame.network {
 
                 // Add it to the incommingCmdBuffer and drop oldest element
                 this.incomingWorldUpdateBuffer.push(worldEntityDescription);
-                if (this.incomingWorldUpdateBuffer.length > BUFFER_MASK)
+                if (this.incomingWorldUpdateBuffer.length > RealtimeMultiplayerGame.Constants.CLIENT_SETTING.MAX_BUFFER)
                     this.incomingWorldUpdateBuffer.shift();
             }
         };
@@ -313,14 +315,14 @@ namespace RealtimeMultiplayerGame.network {
             var message = new RealtimeMultiplayerGame.model.NetChannelMessage(this.outgoingSequenceNumber, this.clientid, isReliable, aCommandConstant, payload);
 
             // Add to array the queue using bitmask to wrap values
-            this.messageBuffer[this.outgoingSequenceNumber & BUFFER_MASK] = message;
+            this.messageBuffer[this.outgoingSequenceNumber & RealtimeMultiplayerGame.Constants.CLIENT_SETTING.MAX_BUFFER] = message;
 
             if (!isReliable) {
                 this.nextUnreliable = message;
             }
 
             ++this.outgoingSequenceNumber;
-            if (RealtimeMultiplayerGame.Constants.DEBUG_SETTING.CLIENT_NETCHANNEL_DEBUG) console.log('(NetChannel) Adding Message to queue', this.messageBuffer[this.outgoingSequenceNumber & BUFFER_MASK], " ReliableBuffer currently contains: ", this.reliableBuffer);
+            if (RealtimeMultiplayerGame.Constants.DEBUG_SETTING.CLIENT_NETCHANNEL_DEBUG) console.log('(NetChannel) Adding Message to queue', this.messageBuffer[this.outgoingSequenceNumber & RealtimeMultiplayerGame.Constants.CLIENT_SETTING.MAX_BUFFER], " ReliableBuffer currently contains: ", this.reliableBuffer);
         };
 
 

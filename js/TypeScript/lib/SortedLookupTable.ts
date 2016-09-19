@@ -9,6 +9,8 @@ namespace RealtimeMultiplayerGame.lib {
         protected _keys:any;
         protected _data:any;
         public nextUUID:any;
+        public gameTick:number;
+        public gameClock:number;
 
         public setObjectForKey(value:any, key:any) {
             if (!this._data.hasOwnProperty(key)) this._keys.push(key);

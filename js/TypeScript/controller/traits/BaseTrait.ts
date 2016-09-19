@@ -86,7 +86,7 @@ namespace RealtimeMultiplayerGame.controller.traits {
             while (len--) {
                 var aKey = arrayOfProperties[len];
                 this.interceptedProperties.setObjectForKey(this.attachedEntity[aKey], aKey);
-                // this.attachedEntity[aKey] = this[aKey];TODO should be fixed
+                // this.attachedEntity[aKey] = this[aKey]; //TODO should be fixed
             }
         };
 
