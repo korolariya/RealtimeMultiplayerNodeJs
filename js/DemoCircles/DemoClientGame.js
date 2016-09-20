@@ -115,7 +115,7 @@
          */
         netChannelDidConnect: function (messageData) {
             DemoApp.DemoClientGame.superclass.netChannelDidConnect.call(this, messageData);
-            DemoApp.DemoClientGame.prototype.log("DemoClientGame: Joining Game");
+            BubbleDots.DemoClientGame.log("DemoClientGame: Joining Game");
             this.joinGame("Player" + this.netChannel.getClientid()); // Automatically join the game with some name
         },
 
@@ -124,7 +124,7 @@
          */
         netChannelDidDisconnect: function (messageData) {
             DemoApp.DemoClientGame.superclass.netChannelDidDisconnect.call(this, messageData);
-            DemoApp.DemoClientGame.prototype.log("DemoClientGame: netChannelDidDisconnect"); // Display disconnect
+            BubbleDots.DemoClientGame.log("DemoClientGame: netChannelDidDisconnect"); // Display disconnect
         },
 
         /**

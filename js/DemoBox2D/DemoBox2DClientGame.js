@@ -104,7 +104,7 @@
          */
         netChannelDidConnect: function (messageData) {
             DemoBox2D.DemoClientGame.superclass.netChannelDidConnect.call(this, messageData);
-            DemoBox2D.DemoClientGame.prototype.log("DemoClientGame: Joining Game");
+            BubbleDots.DemoClientGame.log("DemoClientGame: Joining Game");
             this.joinGame("Player" + this.netChannel.getClientid()); // Automatically join the game with some name
         },
 
@@ -113,7 +113,7 @@
          */
         netChannelDidDisconnect: function (messageData) {
             DemoBox2D.DemoClientGame.superclass.netChannelDidDisconnect.call(this, messageData);
-            DemoBox2D.DemoClientGame.prototype.log("DemoClientGame: netChannelDidDisconnect"); // Display disconnect
+            BubbleDots.DemoClientGame.log("DemoClientGame: netChannelDidDisconnect"); // Display disconnect
         },
 
         /**

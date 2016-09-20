@@ -4,12 +4,12 @@
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
-        "outFile": "tsc.js",
-        "sourceMap": true
+        "sourceMap": true,
+        "outFile": "../server.js"
     },
     "files": [
-//        "script.ts",
-        "Server/server.ts"
-//        "BubbleDotsApp.ts"
-    ]
+        "server.ts"
+    ],
+    "compileOnSave": true
 }
+

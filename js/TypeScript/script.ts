@@ -11,7 +11,7 @@
         // Callback for image preloader
         imagePreloader.loadImages(BubbleDots.Constants.IMAGE_ASSETS, function (counter, images) {
 
-            BubbleDots.DemoClientGame.prototype.log("Preloading image...");
+            BubbleDots.DemoClientGame.log("Preloading image...");
 
             if (counter != images.length) return;
 

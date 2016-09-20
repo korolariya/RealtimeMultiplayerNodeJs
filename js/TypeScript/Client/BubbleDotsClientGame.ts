@@ -1,41 +1,27 @@
-/**
- File:
- DemoServerGame
- Created By:
- Mario Gonzalez
- Project:
- BubbleDots
- Abstract:
- This is a concrete server instance of our game
- Basic Usage:
- DemoServerGame = new BubbleDots.DemoServerGame();
- DemoServerGame.start();
- DemoServerGame.explodeEveryone();
- Version:
- 1.0
- */
-(function () {
+/// <reference path="../core/AbstractClientGame.ts" />
+/// <reference path="../Entities/CircleEntity.ts" />
+/// <reference path="../controller/traits/KeyboardInputTrait.ts" />
+/// <reference path="../Server/BubbleDotsConstants.ts" />
+/// <reference path="./BubbleDotsView.ts" />
+namespace BubbleDots {
+    export class DemoClientGame extends RealtimeMultiplayerGame.AbstractClientGame {
+        constructor() {
+            super();
+            this.startGameClock();
+        }
 
-    BubbleDots.DemoClientGame = function () {
-        BubbleDots.DemoClientGame.superclass.constructor.call(this);
-
-        this.startGameClock();
-        return this;
-    };
-
-    BubbleDots.DemoClientGame.prototype = {
-        setupView: function (images) {
-            this.view = new BubbleDots.DemoView(images);
+        public setupView(images: any) {
+            this.view = new BubbleDots.DemoView();//TODO param images
             this.view.insertIntoHTMLElementWithId("gamecontainer");
 
-            BubbleDots.DemoClientGame.superclass.setupView.call(this);
-        },
+             super.setupView();
+        };
 
         /**
          * @inheritDoc
          */
-        tick: function () {
-            BubbleDots.DemoClientGame.superclass.tick.call(this);
+        public tick() {
+            super.tick();
             this.view.stats.update();
             this.view.update(this.gameClockReal);
             this.view.textfield.setText("Ping: " + this.netChannel.getLatency());
@@ -44,12 +30,12 @@
             if (this.clientCharacter) {
                 this.view.healthPlayer.setText(this.clientCharacter.getHealth());
             }
-        },
+        };
 
         /**
          * @inheritDoc
          */
-        createEntityFromDesc: function (entityDesc) {
+        public   createEntityFromDesc(entityDesc: any) {
 
             // Create a new BubbleDots entity
             var newEntity = new BubbleDots.CircleEntity(entityDesc.entityid, entityDesc.clientid);
@@ -66,51 +52,52 @@
                 this.setupClientPlayer(newEntity);
                 this.view.setFocusCharacter(entityView);
             }
-        },
+        };
 
         /**
          * Called when the player that represents this user is created
          * @param anEntity
          */
-        setupClientPlayer: function (anEntity) {
+        public   setupClientPlayer(anEntity: any) {
             anEntity.addTraitAndExecute(new RealtimeMultiplayerGame.controller.traits.KeyboardInputTrait());
             this.clientCharacter = anEntity;
-        },
+        };
+
         /**
          * Look at cursor
          */
-        followCursor: function () {
+        followCursor() {
             if (this.clientCharacter) {
                 var position = {x: 0, y: 0};
                 position.x = this.view.caatRoot.x + this.clientCharacter.position.x;
                 position.y = this.view.caatRoot.y + this.clientCharacter.position.y;
                 this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
             }
-        },
+        };
 
         /**
          * @inheritDoc
          */
-        netChannelDidConnect: function (messageData) {
-            BubbleDots.DemoClientGame.superclass.netChannelDidConnect.call(this, messageData);
+        netChannelDidConnect(messageData: any) {
+            super.netChannelDidConnect(messageData);
             BubbleDots.DemoClientGame.log("DemoClientGame: Joining Game");
             this.joinGame("Player" + this.netChannel.getClientid()); // Automatically join the game with some name
-        },
+        };
 
         /**
          * @inheritDoc
          */
-        netChannelDidDisconnect: function (messageData) {
-            BubbleDots.DemoClientGame.superclass.netChannelDidDisconnect.call(this, messageData);
+        netChannelDidDisconnect(messageData: any) {
+            super.netChannelDidDisconnect(messageData);
             BubbleDots.DemoClientGame.log("DemoClientGame: netChannelDidDisconnect"); // Display disconnect
-        },
+        };
 
         /**
          * An array containing values received from the entity
-         * @param {String} singleWorldUpdate
+         * @param entityDescAsArray
          */
-        parseEntityDescriptionArray: function (entityDescAsArray) {
-            var entityDescription = {};
+        static parseEntityDescriptionArray(entityDescAsArray: any) {
+            var entityDescription: any = {};
             // It is up to the user to make sure that their objects are following a certain order
             // We do this because we need the performance of sending the tiniest strings possible
             entityDescription.entityid = entityDescAsArray[0];
@@ -122,30 +109,21 @@
             entityDescription.color = entityDescAsArray[6];
             entityDescription.health = entityDescAsArray[7];
             return entityDescription;
-        },
-
+        };
 
         /**
          * This function logs something to the right panel
-         * @param {Object} An object in the form of: { message: ['Client', 'domReady'] }
+         * @param message
          */
-        log: (function () {
-            var message = function (message) {
-                var el = document.createElement('p');
-                el.innerHTML = '<b>' + esc(message) + ':</b> ';
+        public static log(message: any) {
+            var el = document.createElement('p');
+            el.innerHTML = '<b>' + message.replace(/</g, '&lt;').replace(/>/g, '&gt;') + ':</b> ';
+            // Log if possible
+            console.log(message);
+        };
 
-                // Log if possible
-                console.log(message);
-            };
+    }
 
-            var esc = function (msg) {
-                return msg.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            };
 
-            return message;
-        })()
-    };
+}
 
-    // extend RealtimeMultiplayerGame.AbstractClientGame
-    RealtimeMultiplayerGame.extend(BubbleDots.DemoClientGame, RealtimeMultiplayerGame.AbstractClientGame, null);
-})();

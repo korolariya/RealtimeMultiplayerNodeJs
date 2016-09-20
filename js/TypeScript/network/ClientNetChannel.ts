@@ -263,7 +263,7 @@ namespace RealtimeMultiplayerGame.network {
             {
                 // Loop through the string representing the entities properties
                 var entityDescAsArray = allEntities[allEntitiesLen].split(',');
-                var entityDescription = this.delegate.parseEntityDescriptionArray(entityDescAsArray);
+                var entityDescription = RealtimeMultiplayerGame.AbstractClientGame.parseEntityDescriptionArray(entityDescAsArray);
 
                 // Store the final result using the entityid
                 worldDescription.setObjectForKey(entityDescription, entityDescription.entityid);
