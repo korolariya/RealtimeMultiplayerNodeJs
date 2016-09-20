@@ -54,7 +54,7 @@
         },
 
         // The client sends this bitmask to the server
-        // See (Keyboard.ts)
+        // See (Keyboard.js)
         INPUT_BITMASK: {
             UP: 1 << 0,
             DOWN: 1 << 1,

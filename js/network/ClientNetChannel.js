@@ -119,7 +119,7 @@
             }
 
             this.clientid = aNetChannelMessage.id;
-            BubbleDots.DemoClientGame.log("(ClientNetChannel)::ClientID - ")
+            this.delegate.log("(ClientNetChannel)::ClientID - ")
             this.delegate.netChannelDidConnect(aNetChannelMessage);
 
             // Set onMessage function back to normal - removing event listener didn't work, so for now changing the mapping
@@ -244,7 +244,7 @@
             {
                 // Loop through the string representing the entities properties
                 var entityDescAsArray = allEntities[allEntitiesLen].split(',');
-                var entityDescription = RealtimeMultiplayerGame.AbstractClientGame.parseEntityDescriptionArray(entityDescAsArray);
+                var entityDescription = this.delegate.parseEntityDescriptionArray(entityDescAsArray);
 
                 // Store the final result using the entityid
                 worldDescription.setObjectForKey(entityDescription, entityDescription.entityid);

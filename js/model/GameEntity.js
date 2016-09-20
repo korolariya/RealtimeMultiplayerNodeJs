@@ -30,10 +30,9 @@
         entityType: -1,														// A special interger representing the entityType sent via along with other network info
         position: RealtimeMultiplayerGame.model.Point.prototype.ZERO,  		// Current position of this entity
         rotation: 0,
-        traits: null,														// An array of our Traits, in reverse added order
+        traits: null,														// An array of our traits, in reverse added order
         view: null,
         lastReceivedEntityDescription: null,									// The last received entity description (set by renderAtTime)
-
 
         /**
          * Update the view's position
@@ -121,7 +120,7 @@
                 }
             }
 
-            // Detach removed Traits
+            // Detach removed traits
             if (removedTraits) {
                 i = removedTraits.length;
                 while (i--) {
@@ -131,7 +130,7 @@
         },
 
         /**
-         * Removes all Traits contained in this entity
+         * Removes all traits contained in this entity
          */
         removeAllTraits: function () {
             var i = this.traits.length;

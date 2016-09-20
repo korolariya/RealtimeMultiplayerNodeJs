@@ -62,7 +62,7 @@
                 })
                 .start();
 
-//			var newRadius = Math.max( BubbleDots.Traits.FoodTrait.prototype.radius, them.radius+0.1 );
+//			var newRadius = Math.max( BubbleDots.traits.FoodTrait.prototype.radius, them.radius+0.1 );
 //			them.radius = newRadius;
 //			them.collisionCircle.setRadius( newRadius );
             me.collisionCircle.collisionGroup = 0;

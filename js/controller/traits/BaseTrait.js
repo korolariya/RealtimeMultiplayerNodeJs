@@ -49,7 +49,7 @@
     };
 
     RealtimeMultiplayerGame.controller.traits.BaseTrait.prototype = {
-        interceptedProperties: null,  					// SortedLookupTable of Traits we've intercepted so they can be applied back
+        interceptedProperties: null,  					// SortedLookupTable of traits we've intercepted so they can be applied back
         attachedEntity: null,						// Trait host
         detachTimeout: 0,						// Store detach setTimeout
         displayName: "BaseTrait",				// Unique string name for this Trait
@@ -115,7 +115,7 @@
         },
 
         /**
-         * Restores Traits that were intercepted.
+         * Restores traits that were intercepted.
          * Be sure to call this when removing the trait!
          */
         restore: function () {
