@@ -204,7 +204,7 @@ namespace RealtimeMultiplayerGame {
          * @param {Array} entityDescAsArray An array of tightly packed values
          * @return {Object} An object which will be returned to you later on tied to a specific entity
          */
-        public parseEntityDescriptionArray(entityDescAsArray: any) {
+        public static parseEntityDescriptionArray(entityDescAsArray: any) {
             // This is left in as an example, copy paste this into your AbstractClientGame subclass and modify from there
             var entityDescription: any = {};
 

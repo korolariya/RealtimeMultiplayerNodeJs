@@ -1,21 +1,22 @@
 /// <reference path="../Server/BubbleDotsConstants.ts" />
+/// <reference path="../lib/CAAT.d.ts" />
 namespace BubbleDots {
-    class DemoView {
+    export class DemoView {
         constructor() {
             this.setupCAAT();
             this.setupStats();
         }
 
         // Properties
-        public caatDirector:any = null;				// CAAT Director instance
-        public caatScene:any = null;				// CAAT Scene instance
-        public caatRoot:any = null;
-        public focusCharacter:any = null;				// The 'camera' will follow this player
-        public stats:any = null;				// Stats.js instance
-        public textfield:any = null;				// CAAT text
-        public healthPlayer:any = null;
-        public CAATSprite:any;
-        public director:any;
+        public caatDirector: any = null;				// CAAT Director instance
+        public caatScene: any = null;				// CAAT Scene instance
+        public caatRoot: any = null;
+        public focusCharacter: any = null;				// The 'camera' will follow this player
+        public stats: any = null;				// Stats.js instance
+        public textfield: any = null;				// CAAT text
+        public healthPlayer: any = null;
+        public CAATSprite: any;
+        public director: any;
 
 
         // Methods
@@ -72,7 +73,7 @@ namespace BubbleDots {
          * Updates our current view, passing along the current actual time (via Date().getTime());
          * @param {Number} gameClockReal The current actual time, according to the game
          */
-        public update(gameClockReal:any) {
+        public update(gameClockReal: any) {
             var delta = gameClockReal - this.caatDirector.timeline;
 
             if (this.focusCharacter) {
@@ -103,12 +104,12 @@ namespace BubbleDots {
             document.body.appendChild(container);
         };
 
-        public  addEntity(anEntityView:any) {
+        public  addEntity(anEntityView: any) {
             this.caatRoot.addChild(anEntityView);
         };
 
 
-        public  removeEntity(anEntityView:any) {
+        public  removeEntity(anEntityView: any) {
             // console.log("Removing Entity From CAAT", anEntityView);
             this.caatRoot.removeChild(anEntityView);
         };
@@ -117,7 +118,7 @@ namespace BubbleDots {
          * Create a view for an entity in CAAT using the entity description
          * @param {Object} entityDesc An object containing properties for this entity, sent from the server
          */
-        public  createEntityView(entityDesc:any) {
+        public  createEntityView(entityDesc: any) {
             // Retrieve the image from caatDirector (stored in the preloading sequence in script.js)
             var imageName = "particle" + entityDesc.color;
             var imageRef = this.caatDirector.getImage(imageName);
@@ -125,13 +126,11 @@ namespace BubbleDots {
                 .initialize(imageRef, 1, 1);
 
             // Create the actor using the image
-            var actor = this.CAATSprite = new CAAT.SpriteActor()
+            return this.CAATSprite = new CAAT.SpriteActor()
                 .create()
                 .setSpriteImage(caatImage)
                 .setScale(0.5, 0.5)
                 .setLocation(entityDesc.x, entityDesc.y);
-
-            return actor;
         };
 
 
@@ -158,7 +157,7 @@ namespace BubbleDots {
          * Insert the CAATDirector canvas into an HTMLElement
          * @param {String} id An HTMLElement id
          */
-        public insertIntoHTMLElementWithId(id:any) {
+        public insertIntoHTMLElementWithId(id: any) {
             document.getElementById(id).appendChild(this.caatDirector.canvas);
         };
 
@@ -167,7 +166,7 @@ namespace BubbleDots {
             this.director.destroy();
         };
 
-        public setFocusCharacter(entity:any) {
+        public setFocusCharacter(entity: any) {
             this.focusCharacter = entity;
         };
 

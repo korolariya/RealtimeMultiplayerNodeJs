@@ -1,14 +1,17 @@
-/// <reference path="../controller/traits/BaseTrait.ts" />
+/// <reference path="../../controller/traits/BaseTrait.ts" />
+/// <reference path="../../input/Keyboard.ts" />
 namespace RealtimeMultiplayerGame.controller.traits {
     export class KeyboardInputTrait extends BaseTrait {
 
         public displayName = "KeyboardInputTrait";
+        public entityid:any;
+        public input:any;
 
         /**
          * Attach the trait to the host object
          * @param anEntity
          */
-        public attach(anEntity) {
+        public attach(anEntity:any) {
             super.attach(anEntity);
 
             // Intercept those two properties from the attached enitity with our own

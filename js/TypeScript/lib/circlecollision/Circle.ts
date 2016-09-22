@@ -123,7 +123,7 @@ namespace RealtimeMultiplayerGame.modules.circlecollision {
         public initialize(overrides: any) {
             if (overrides) {
                 // for (let i:number in overrides) {
-                // this[i] = overrides[i]; //TODO should be fixed
+                //     this[i] = overrides[i]; //TODO should be fixed
                 // }
             }
 

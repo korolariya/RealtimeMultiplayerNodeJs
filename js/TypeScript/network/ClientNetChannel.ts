@@ -1,4 +1,6 @@
 /// <reference path="../model/Constants.ts" />
+/// <reference path="../../../typings/index.d.ts" />
+/// <reference path="../model/NetChannelMessage.ts" />
 namespace RealtimeMultiplayerGame.network {
     import SortedLookupTable = RealtimeMultiplayerGame.lib.SortedLookupTable;
     export class ClientNetChannel {
@@ -233,7 +235,7 @@ namespace RealtimeMultiplayerGame.network {
             while (++i < len) // Want to parse through them in correct order, so no fancy --len
             {
                 var singleWorldUpdate = aNetChannelMessage.data[i];
-                var worldEntityDescription = this.createWorldEntityDescriptionFromString(singleWorldUpdate);
+                var worldEntityDescription = RealtimeMultiplayerGame.network.ClientNetChannel.createWorldEntityDescriptionFromString(singleWorldUpdate);
 
                 // Add it to the incommingCmdBuffer and drop oldest element
                 this.incomingWorldUpdateBuffer.push(worldEntityDescription);
@@ -248,7 +250,7 @@ namespace RealtimeMultiplayerGame.network {
          * and creates SortedLookupTable out of it with the entityid's as the keys
          * @param {String} aWorldUpdateMessage
          */
-        public createWorldEntityDescriptionFromString(aWorldUpdateMessage: any) {
+        public static createWorldEntityDescriptionFromString(aWorldUpdateMessage: any) {
             // Create a new WorldEntityDescription and store the clock and gametick in it
             var worldDescription = new SortedLookupTable();
             worldDescription.gameTick = aWorldUpdateMessage.gameTick;

@@ -110,6 +110,7 @@
          * @param {String} singleWorldUpdate
          */
         parseEntityDescriptionArray: function (entityDescAsArray) {
+            console.log(entityDescAsArray);
             var entityDescription = {};
             // It is up to the user to make sure that their objects are following a certain order
             // We do this because we need the performance of sending the tiniest strings possible

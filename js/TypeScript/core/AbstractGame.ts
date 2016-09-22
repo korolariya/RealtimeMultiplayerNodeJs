@@ -14,7 +14,7 @@ namespace RealtimeMultiplayerGame {
         public gameTick: number = 0;											// Ticks since start
         public isRunning: boolean = true;
         public speedFactor: number = 1;											// Used to create Framerate Independent Motion (FRIM) - 1.0 means running at exactly the correct speed, 0.5 means half-framerate. (otherwise faster machines which can update themselves more accurately will have an advantage)
-        public intervalGameTick: NodeJS.Timer = null;											// Setinterval for gametick
+        public intervalGameTick: any = null;											// Setinterval for gametick
         public intervalFramerate: number = 60;											// Try to call our tick function this often, intervalFramerate, is used to determin how often to call settimeout - we can set to lower numbers for slower computers
         public intervalTargetDelta: number = NaN;	// this.targetDelta, milliseconds between frames. Normally it is 16ms or 60FPS. The framerate the game is designed against - used to create framerate independent motion
         public gameDuration: number = Number.MAX_VALUE;								// Gameduration
@@ -71,7 +71,7 @@ namespace RealtimeMultiplayerGame {
             clearTimeout(this.intervalGameTick);
         }
 
-        public  setGameDuration(gameDuration:number) {
+        public  setGameDuration(gameDuration: number) {
             this.gameDuration = gameDuration;
         };
 

@@ -14,7 +14,7 @@ namespace BubbleDots {
             super();
             this.setGameDuration(BubbleDots.Constants.GAME_DURATION);
             this.setupCollisionManager();
-            this.setupRandomField();
+            // this.setupRandomField();
         }
 
         public collisionManager: any = null;
@@ -95,7 +95,6 @@ namespace BubbleDots {
          */
         public tick() {
             this.collisionManager.handleCollisions();
-            // BubbleDots.lib.TWEEN.update();
             // Note we call superclass's implementation after we're done
             super.tick();
         };
@@ -113,6 +112,7 @@ namespace BubbleDots {
             playerEntity.setColor("4");
             // playerEntity.addTraitAndExecute(new BubbleDots.traits.ShotTrait(this));
             this.fieldController.addPlayer(playerEntity);
+
         };
 
 
@@ -123,6 +123,7 @@ namespace BubbleDots {
             var entity = this.fieldController.getEntityWithid(data.payload.entityid);
             entity.input.deconstructInputBitmask(data.payload.input);
             entity.input.lookAtVector = data.payload.mouse;
+            console.log(data);
         };
 
         /**
