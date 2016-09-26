@@ -10,14 +10,14 @@ namespace RealtimeMultiplayerGame {
 
         public view: any = null;
         public clientCharacter: any = null;
-        public nickname:any = '';
-        public locateUpdateFailedCount:any = 0;
+        public nickname: any = '';
+        public locateUpdateFailedCount: any = 0;
 
         /**
          * Setup the view
          * RealtimeMultiplayerNodeJS is agnostic any rendering method
          */
-        public  setupView(images:any=null) {
+        public  setupView(images: any = null) {
             if (this.view === null) {  // If this is called, then user has not overwritten this function
                 throw new Error("RealtimeMultiplayerGame.AbstractClientGame.setupView - Override this method, then call MyClientGame.superclass.setupView()");
             }
@@ -204,7 +204,7 @@ namespace RealtimeMultiplayerGame {
          * @param {Array} entityDescAsArray An array of tightly packed values
          * @return {Object} An object which will be returned to you later on tied to a specific entity
          */
-        public static parseEntityDescriptionArray(entityDescAsArray: any) {
+        public parseEntityDescriptionArray(entityDescAsArray: any) {
             // This is left in as an example, copy paste this into your AbstractClientGame subclass and modify from there
             var entityDescription: any = {};
 

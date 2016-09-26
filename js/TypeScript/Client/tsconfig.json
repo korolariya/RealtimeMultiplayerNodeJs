@@ -8,7 +8,7 @@
         "outFile": "../client.js"
     },
     "files": [
-        "BubbleDotsClientGame.ts"
+        "script.ts"
     ],
     "compileOnSave": true
 }

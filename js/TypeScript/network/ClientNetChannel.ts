@@ -1,6 +1,8 @@
 /// <reference path="../model/Constants.ts" />
 /// <reference path="../../../typings/index.d.ts" />
 /// <reference path="../model/NetChannelMessage.ts" />
+/// <reference path="../core/AbstractClientGame.ts" />
+/// <reference path="../Client/BubbleDotsClientGame.ts" />
 namespace RealtimeMultiplayerGame.network {
     import SortedLookupTable = RealtimeMultiplayerGame.lib.SortedLookupTable;
     export class ClientNetChannel {
@@ -76,7 +78,7 @@ namespace RealtimeMultiplayerGame.network {
 
         public lastReceivedTime: any;
 
-        public nextUnreliable:any;
+        public nextUnreliable: any;
 
         public setupSocketIO() {
             // debugger;
@@ -124,7 +126,7 @@ namespace RealtimeMultiplayerGame.network {
 
         // SocketIO Callbacks
         public  onSocketConnect() {
-            // console.log("(ClientNetChannel):onSocketConnect", arguments, this.socketio);
+            console.log("(ClientNetChannel):onSocketConnect", arguments, this.socketio);
         };
 
         /**
@@ -235,7 +237,7 @@ namespace RealtimeMultiplayerGame.network {
             while (++i < len) // Want to parse through them in correct order, so no fancy --len
             {
                 var singleWorldUpdate = aNetChannelMessage.data[i];
-                var worldEntityDescription = RealtimeMultiplayerGame.network.ClientNetChannel.createWorldEntityDescriptionFromString(singleWorldUpdate);
+                var worldEntityDescription = this.createWorldEntityDescriptionFromString(singleWorldUpdate);
 
                 // Add it to the incommingCmdBuffer and drop oldest element
                 this.incomingWorldUpdateBuffer.push(worldEntityDescription);
@@ -250,7 +252,7 @@ namespace RealtimeMultiplayerGame.network {
          * and creates SortedLookupTable out of it with the entityid's as the keys
          * @param {String} aWorldUpdateMessage
          */
-        public static createWorldEntityDescriptionFromString(aWorldUpdateMessage: any) {
+        public createWorldEntityDescriptionFromString(aWorldUpdateMessage: any) {
             // Create a new WorldEntityDescription and store the clock and gametick in it
             var worldDescription = new SortedLookupTable();
             worldDescription.gameTick = aWorldUpdateMessage.gameTick;
@@ -265,7 +267,7 @@ namespace RealtimeMultiplayerGame.network {
             {
                 // Loop through the string representing the entities properties
                 var entityDescAsArray = allEntities[allEntitiesLen].split(',');
-                var entityDescription = RealtimeMultiplayerGame.AbstractClientGame.parseEntityDescriptionArray(entityDescAsArray);
+                var entityDescription = BubbleDots.DemoClientGame.parseEntityDescriptionArray(entityDescAsArray); //TODO not work this
 
                 // Store the final result using the entityid
                 worldDescription.setObjectForKey(entityDescription, entityDescription.entityid);
@@ -332,7 +334,7 @@ namespace RealtimeMultiplayerGame.network {
          * Adjust the message chokerate based on latency
          * @param serverMessage
          */
-        public  adjustRate(serverMessage:any) {
+        public  adjustRate(serverMessage: any) {
             this.latency = serverMessage.gameClock - this.delegate.getGameClock();
         };
 
@@ -353,7 +355,7 @@ namespace RealtimeMultiplayerGame.network {
          * Set the NetChannelDelegate after validation
          * @param aDelegate
          */
-        public setDelegate(aDelegate:any) {
+        public setDelegate(aDelegate: any) {
             //TODO check instance
             // Checks passed
             this.delegate = aDelegate;

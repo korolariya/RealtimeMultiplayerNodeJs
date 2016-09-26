@@ -9,12 +9,14 @@ namespace BubbleDots {
             super();
             this.startGameClock();
         }
+        public images: any;
 
-        public setupView(images: any) {
-            this.view = new BubbleDots.DemoView();//TODO param images
+        public setupView() {
+            console.log(BubbleDots.IMAGE_CACHE);
+            this.view = new BubbleDots.DemoView(this.images);//TODO param images
             this.view.insertIntoHTMLElementWithId("gamecontainer");
 
-             super.setupView();
+            super.setupView(BubbleDots.IMAGE_CACHE);
         };
 
         /**
@@ -66,19 +68,20 @@ namespace BubbleDots {
         /**
          * Look at cursor
          */
-        followCursor() {
+      public  followCursor() {
             if (this.clientCharacter) {
                 var position = {x: 0, y: 0};
                 position.x = this.view.caatRoot.x + this.clientCharacter.position.x;
                 position.y = this.view.caatRoot.y + this.clientCharacter.position.y;
-                this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
+                 this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
             }
         };
 
         /**
          * @inheritDoc
          */
-        netChannelDidConnect(messageData: any) {
+      public  netChannelDidConnect(messageData: any) {
+            console.log('netChannelDidConnect');
             super.netChannelDidConnect(messageData);
             BubbleDots.DemoClientGame.log("DemoClientGame: Joining Game");
             this.joinGame("Player" + this.netChannel.getClientid()); // Automatically join the game with some name
@@ -87,7 +90,8 @@ namespace BubbleDots {
         /**
          * @inheritDoc
          */
-        netChannelDidDisconnect(messageData: any) {
+       public netChannelDidDisconnect(messageData: any) {
+            console.log('netChannelDidDisconnect');
             super.netChannelDidDisconnect(messageData);
             BubbleDots.DemoClientGame.log("DemoClientGame: netChannelDidDisconnect"); // Display disconnect
         };
@@ -96,7 +100,7 @@ namespace BubbleDots {
          * An array containing values received from the entity
          * @param entityDescAsArray
          */
-        static parseEntityDescriptionArray(entityDescAsArray: any) {
+     static parseEntityDescriptionArray(entityDescAsArray: any) {
             var entityDescription: any = {};
             // It is up to the user to make sure that their objects are following a certain order
             // We do this because we need the performance of sending the tiniest strings possible

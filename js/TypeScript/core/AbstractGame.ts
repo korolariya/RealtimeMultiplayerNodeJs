@@ -27,6 +27,7 @@ namespace RealtimeMultiplayerGame {
          * Setup the ClientNetChannel or ServerNetChannel
          */
         public setupNetChannel() {
+            console.log('setupNetChannel');
         };
 
         /**

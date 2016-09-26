@@ -1,11 +1,15 @@
 /// <reference path="../Server/BubbleDotsConstants.ts" />
 /// <reference path="../lib/CAAT.d.ts" />
 namespace BubbleDots {
+    export var IMAGE_CACHE:any = null;
     export class DemoView {
-        constructor() {
+        constructor(images:any) {
+            this.images = images;
             this.setupCAAT();
             this.setupStats();
         }
+
+        public images: any;
 
         // Properties
         public caatDirector: any = null;				// CAAT Director instance
@@ -27,7 +31,10 @@ namespace BubbleDots {
 
             this.caatDirector = new CAAT.Director().initialize(BubbleDots.Constants.GAME_WIDTH, BubbleDots.Constants.GAME_HEIGHT); // Create the director instance
             this.caatDirector.addScene(this.caatScene); // Immediately add the scene once it's created
-            // this.caatDirector.setImagesCache(BubbleDots.IMAGE_CACHE);//TODO should be fixed
+          console.log('caatDirector');
+            console.log('this.caatDirector');
+            console.log(this.images);
+            this.caatDirector.setImagesCache(BubbleDots.IMAGE_CACHE);//TODO should be fixed
 
 
             this.caatRoot = new CAAT.ActorContainer()
@@ -124,7 +131,6 @@ namespace BubbleDots {
             var imageRef = this.caatDirector.getImage(imageName);
             var caatImage = new CAAT.CompoundImage()
                 .initialize(imageRef, 1, 1);
-
             // Create the actor using the image
             return this.CAATSprite = new CAAT.SpriteActor()
                 .create()

@@ -1,5 +1,5 @@
-/// <reference path="../../typings/index.d.ts" />
-
+/// <reference path="../../../typings/index.d.ts" />
+/// <reference path="BubbleDotsClientGame.ts" />
 (function () {
     // Callback for when browse is ready
     var onDocumentReady = function () {
@@ -9,7 +9,7 @@
         var imagePreloader = new CAAT.ImagePreloader();
 
         // Callback for image preloader
-        imagePreloader.loadImages(BubbleDots.Constants.IMAGE_ASSETS, function (counter, images) {
+        imagePreloader.loadImages(BubbleDots.Constants.IMAGE_ASSETS, function (counter:any, images:any) {
 
             BubbleDots.DemoClientGame.log("Preloading image...");
 
@@ -18,7 +18,7 @@
             BubbleDots.IMAGE_CACHE = images;
 
             // Image preload complete - START THE GAME!
-            var clientGame = new BubbleDots.DemoClientGame(images);
+            var clientGame = new BubbleDots.DemoClientGame();
         });
     };
 
