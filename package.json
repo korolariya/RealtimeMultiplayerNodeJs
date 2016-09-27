@@ -4,6 +4,7 @@
   "description": "RealtimeMultiplayerNodeJS is a framework specifically for building HTML5 multiplayer games with the Client / Server model",
   "main": "js/BubbleDots/server.js",
   "dependencies": {
+    "pixi.js": "^4.0.2",
     "socket.io": "~0.9.16"
   },
   "devDependencies": {},
