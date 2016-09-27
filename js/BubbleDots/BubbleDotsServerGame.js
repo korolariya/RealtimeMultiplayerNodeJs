@@ -156,11 +156,10 @@
          */
         shouldUpdatePlayer: function (aClientid, data) {
             var entity = this.fieldController.getEntityWithid(data.payload.entityid);
-            console.log(data);
-            if (data.payload.input) {
-                entity.input.deconstructInputBitmask(data.payload.input);
-                entity.input.lookAtVector = data.payload.mouse;
-            }
+            entity.input.deconstructInputBitmask(data.payload.input);
+            // console.log(entity.input.keys);
+            // console.log(data.payload.input);
+            entity.input.lookAtVector = data.payload.mouse;
         },
 
         /**
