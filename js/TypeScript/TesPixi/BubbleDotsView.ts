@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
-
 namespace BubbleDots {
-    export class DemoView {
+    export class PixiView {
         constructor() {
             this.setupPixi();
             this.setupStats();
@@ -32,12 +31,8 @@ namespace BubbleDots {
         };
 
         public onAssetsLoaded() {
-            this.bunny = new PIXI.Sprite(PIXI.loader.resources.bunny.texture);
-            this.bunny.anchor.x = 0.5;
-            this.bunny.anchor.y = 0.5;
-            this.bunny.position.x = 200;
-            this.bunny.position.y = 150;
-            this.stage.addChild(this.bunny);
+            this.bunny = this.createEntityView();
+            this.addEntity(this.bunny);
             this.update(1);
         }
 
@@ -56,9 +51,43 @@ namespace BubbleDots {
             // this.caatDirector.timeline = gameClockReal;
             this.bunny.rotation += 0.01;
             this.renderer.render(this.stage);
-            // requestAnimationFrame(this.update.bind(this));
+            requestAnimationFrame(this.update.bind(this));
         };
+
+        public createEntityView(entityDesc: any = null) {
+            if (PIXI.loader.loading == false) {
+                return this.newEntityView();
+            } else {
+                var self = this;
+                setTimeout(function () {
+                    self.createEntityView();
+                }, 1000);
+            }
+        }
+
+        public newEntityView() {
+            var view = new PIXI.Sprite(PIXI.loader.resources.bunny.texture);
+            view.anchor.x = 0.5;
+            view.anchor.y = 0.5;
+            view.position.x = 200;
+            view.position.y = 150;
+            return view;
+        }
+
+        public  addEntity(anEntityView: any) {
+            this.stage.addChild(anEntityView);
+        };
+
+
+        public  removeEntity(anEntityView: any) {
+            this.stage.removeChild(anEntityView);
+        };
+
+        public test() {
+            var tt = this.createEntityView();
+            tt.position.x = 300;
+            this.addEntity(tt);
+        }
     }
 }
 
-var test = new BubbleDots.DemoView();

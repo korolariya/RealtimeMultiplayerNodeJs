@@ -2,20 +2,19 @@
 /// <reference path="../Entities/CircleEntity.ts" />
 /// <reference path="../controller/traits/KeyboardInputTrait.ts" />
 /// <reference path="../Server/BubbleDotsConstants.ts" />
-/// <reference path="./BubbleDotsView.ts" />
+/// <reference path="BubbleDotsView.ts" />
 namespace BubbleDots {
-    export class DemoClientGame extends RealtimeMultiplayerGame.AbstractClientGame {
+    export class PixiClientGame extends RealtimeMultiplayerGame.AbstractClientGame {
         constructor() {
             super();
             this.startGameClock();
         }
-        public images: any;
+
+        public view:BubbleDots.PixiView;
 
         public setupView() {
-            this.view = new BubbleDots.DemoView(this.images);//TODO param images
-            this.view.insertIntoHTMLElementWithId("gamecontainer");
-
-            super.setupView(BubbleDots.IMAGE_CACHE);
+            this.view = new BubbleDots.PixiView();
+            super.setupView();
         };
 
         /**
@@ -23,14 +22,14 @@ namespace BubbleDots {
          */
         public tick() {
             super.tick();
-            this.view.stats.update();
+            // this.view.stats.update();
             this.view.update(this.gameClockReal);
-            this.view.textfield.setText("Ping: " + this.netChannel.getLatency());
-            this.followCursor();
+            // this.view.textfield.setText("Ping: " + this.netChannel.getLatency());
+            // this.followCursor();
 
-            if (this.clientCharacter) {
-                this.view.healthPlayer.setText(this.clientCharacter.getHealth());
-            }
+            // if (this.clientCharacter) {
+            //     this.view.healthPlayer.setText(this.clientCharacter.getHealth());
+            // }
         };
 
         /**
@@ -50,8 +49,8 @@ namespace BubbleDots {
 
             // Our own character
             if (entityDesc.clientid == this.netChannel.getClientid() && entityDesc.entityType & BubbleDots.Constants.ENTITY_TYPES.PLAYER_ENTITY) {
-                this.setupClientPlayer(newEntity);
-                this.view.setFocusCharacter(entityView);
+                // this.setupClientPlayer(newEntity);
+                // this.view.setFocusCharacter(entityView);
             }
         };
 
@@ -67,14 +66,14 @@ namespace BubbleDots {
         /**
          * Look at cursor
          */
-      public  followCursor() {
-            if (this.clientCharacter) {
-                var position = {x: 0, y: 0};
-                position.x = this.view.caatRoot.x + this.clientCharacter.position.x;
-                position.y = this.view.caatRoot.y + this.clientCharacter.position.y;
-                 this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
-            }
-        };
+      // public  followCursor() {
+      //       if (this.clientCharacter) {
+      //           var position = {x: 0, y: 0};
+      //           position.x = this.view.caatRoot.x + this.clientCharacter.position.x;
+      //           position.y = this.view.caatRoot.y + this.clientCharacter.position.y;
+      //            this.clientCharacter.view.setRotation(this.clientCharacter.input.calculateAngleRotation(position));
+      //       }
+      //   };
 
         /**
          * @inheritDoc

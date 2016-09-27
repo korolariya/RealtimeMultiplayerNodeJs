@@ -8,7 +8,7 @@
         "outFile": "../pixiCl.js"
     },
     "files": [
-        "test.ts"
+      "script.ts"
     ],
     "compileOnSave": true
 }

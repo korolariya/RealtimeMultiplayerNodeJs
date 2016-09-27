@@ -33,7 +33,6 @@ namespace BubbleDots {
             this.caatDirector.addScene(this.caatScene); // Immediately add the scene once it's created
             this.caatDirector.setImagesCache(BubbleDots.IMAGE_CACHE);
 
-
             this.caatRoot = new CAAT.ActorContainer()
                 .setBounds(0, 0, this.caatScene.width, this.caatScene.height)
                 .create()
@@ -83,7 +82,7 @@ namespace BubbleDots {
             if (this.focusCharacter) {
                 this.followFocusCharacter();
             }
-            console.log(this.caatDirector);
+
             this.caatDirector.render(0);
             this.caatDirector.timeline = gameClockReal;
         };
