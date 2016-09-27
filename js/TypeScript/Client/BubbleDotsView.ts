@@ -1,9 +1,9 @@
 /// <reference path="../Server/BubbleDotsConstants.ts" />
 /// <reference path="../lib/CAAT.d.ts" />
 namespace BubbleDots {
-    export var IMAGE_CACHE:any = null;
+    export var IMAGE_CACHE: any = null;
     export class DemoView {
-        constructor(images:any) {
+        constructor(images: any) {
             this.images = images;
             this.setupCAAT();
             this.setupStats();
@@ -31,10 +31,7 @@ namespace BubbleDots {
 
             this.caatDirector = new CAAT.Director().initialize(BubbleDots.Constants.GAME_WIDTH, BubbleDots.Constants.GAME_HEIGHT); // Create the director instance
             this.caatDirector.addScene(this.caatScene); // Immediately add the scene once it's created
-          console.log('caatDirector');
-            console.log('this.caatDirector');
-            console.log(this.images);
-            this.caatDirector.setImagesCache(BubbleDots.IMAGE_CACHE);//TODO should be fixed
+            this.caatDirector.setImagesCache(BubbleDots.IMAGE_CACHE);
 
 
             this.caatRoot = new CAAT.ActorContainer()
@@ -86,8 +83,8 @@ namespace BubbleDots {
             if (this.focusCharacter) {
                 this.followFocusCharacter();
             }
-
-            this.caatDirector.render(delta);
+            console.log(this.caatDirector);
+            this.caatDirector.render(0);
             this.caatDirector.timeline = gameClockReal;
         };
 

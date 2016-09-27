@@ -37,7 +37,7 @@ namespace BubbleDots {
         /**
          * @inheritDoc
          */
-        public   createEntityFromDesc(entityDesc: any) {
+        public createEntityFromDesc(entityDesc: any) {
 
             // Create a new BubbleDots entity
             var newEntity = new BubbleDots.CircleEntity(entityDesc.entityid, entityDesc.clientid);
