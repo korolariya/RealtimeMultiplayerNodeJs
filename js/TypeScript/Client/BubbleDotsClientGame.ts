@@ -95,24 +95,7 @@ namespace BubbleDots {
             BubbleDots.DemoClientGame.log("DemoClientGame: netChannelDidDisconnect"); // Display disconnect
         };
 
-        /**
-         * An array containing values received from the entity
-         * @param entityDescAsArray
-         */
-     static parseEntityDescriptionArray(entityDescAsArray: any) {
-            var entityDescription: any = {};
-            // It is up to the user to make sure that their objects are following a certain order
-            // We do this because we need the performance of sending the tiniest strings possible
-            entityDescription.entityid = entityDescAsArray[0];
-            entityDescription.clientid = entityDescAsArray[1];
-            entityDescription.entityType = +entityDescAsArray[2];
-            entityDescription.x = +entityDescAsArray[3];
-            entityDescription.y = +entityDescAsArray[4];
-            entityDescription.scale = +entityDescAsArray[5];
-            entityDescription.color = entityDescAsArray[6];
-            entityDescription.health = entityDescAsArray[7];
-            return entityDescription;
-        };
+
 
         /**
          * This function logs something to the right panel
