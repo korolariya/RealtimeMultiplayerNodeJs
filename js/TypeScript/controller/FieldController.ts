@@ -167,11 +167,11 @@ namespace RealtimeMultiplayerGame.Controller {
         };
 
         public getView() {
-            return this.view
+            return this.view;
         };
 
         public getEntities() {
-            return this.entities
+            return this.entities;
         };
 
         public getPlayers() {

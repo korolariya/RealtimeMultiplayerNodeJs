@@ -14,7 +14,7 @@ namespace BubbleDots {
             super();
             this.setGameDuration(BubbleDots.Constants.GAME_DURATION);
             this.setupCollisionManager();
-            // this.setupRandomField();
+            this.setupRandomField();
         }
 
         public collisionManager: any = null;
@@ -55,12 +55,12 @@ namespace BubbleDots {
                 var entity = this.createEntity(BubbleDots.CircleEntity, radius, this.getNextEntityID(), RealtimeMultiplayerGame.Constants.SERVER_SETTING.CLIENT_ID);
 
                 // Randomly make the object 'food' or 'poison'
-                if (i % 5 === 0) {
+                // if (i % 5 === 0) {
                     entity.addTraitAndExecute(new BubbleDots.traits.PoisonTrait());
-                } else {
-                    entity.addTraitAndExecute(new BubbleDots.traits.MobTrait());
-                    entity.addTraitAndExecute(new BubbleDots.traits.HuntTrait());
-                }
+                // } else {
+                    // entity.addTraitAndExecute(new BubbleDots.traits.MobTrait());
+                    // entity.addTraitAndExecute(new BubbleDots.traits.HuntTrait());
+                // }
             }
         };
 

@@ -1,6 +1,6 @@
 namespace RealtimeMultiplayerGame.model {
     export class WorldEntityDescription {
-        constructor(aGameInstance, allEntities) {
+        constructor(aGameInstance:any, allEntities:any) {
             this.gameClock = aGameInstance.getGameClock();
             this.gameTick = aGameInstance.getGameTick();
             this.allEntities = allEntities;
@@ -8,9 +8,10 @@ namespace RealtimeMultiplayerGame.model {
             this.entities = [];
         }
 
-        public entities = null;
+        public entities:any = null;
         public gameClock = 0;
         public gameTick = 0;
+        public allEntities:any;
 
         /**
          * Ask each entity to create it's entity description
@@ -21,7 +22,7 @@ namespace RealtimeMultiplayerGame.model {
             var len = this.allEntities.length;
             var fullDescriptionString = '';
 
-            this.allEntities.forEach(function (key, entity) {
+            this.allEntities.forEach(function (key:any, entity:any) {
                 var entityDescriptionString = entity.constructEntityDescription(this.gameTick);
                 fullDescriptionString += "|" + entityDescriptionString;
             }, this);

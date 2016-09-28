@@ -175,7 +175,7 @@ namespace RealtimeMultiplayerGame.network {
          * Callback from socket.io when a client has disconnected
          * @param clientConnection
          */
-        public   onSocketClosed(clientConnection: any) {
+        public onSocketClosed(clientConnection: any) {
             var client = this.clients.objectForKey(clientConnection.sessionId);
             if (!client) {
                 console.warn("(ServerNetChannel)::onSocketClosed - ERROR - Attempting to remove client that was not found in our list! ");

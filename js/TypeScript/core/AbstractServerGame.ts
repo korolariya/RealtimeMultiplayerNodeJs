@@ -1,5 +1,6 @@
 /// <reference path="./AbstractGame.ts" />
 /// <reference path="../network/ServerNetChannel.ts" />
+/// <reference path="../model/WorldEntityDescription.ts" />
 namespace RealtimeMultiplayerGame {
     export class AbstractServerGame extends RealtimeMultiplayerGame.AbstractGame {
         constructor() {
@@ -38,13 +39,15 @@ namespace RealtimeMultiplayerGame {
         public  tick() {
             super.tick();
             // Allow all entities to update their position
-            this.fieldController.getEntities().forEach(function (key:any, entity:any) {
+            this.fieldController.getEntities().forEach(function (key: any, entity: any) {
                 entity.updatePosition(this.speedFactor, this.gameClock, this.gameTick);
             }, this);
 
+            var test = this.fieldController.getEntities();
+
             // Create a new world-entity-description,
-            // var worldEntityDescription = new RealtimeMultiplayerGame.model.WorldEntityDescription(this, this.fieldController.getEntities());
-            // this.netChannel.tick(this.gameClock, worldEntityDescription);
+            var worldEntityDescription = new RealtimeMultiplayerGame.model.WorldEntityDescription(this, this.fieldController.getEntities());
+            this.netChannel.tick(this.gameClock, worldEntityDescription);
 
             if (this.gameClock > this.gameDuration) {
                 this.shouldEndGame();
